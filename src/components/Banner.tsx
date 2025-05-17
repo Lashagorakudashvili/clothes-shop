@@ -22,7 +22,7 @@ export default function Banner() {
           </Link>
         </p>
         <Image
-          className="hover:cursor-pointer md:mr-[1rem] lg:mr-[5rem] xl:mr-[7.5rem]"
+          className="hover:cursor-pointer mr-[3.5px] md:mr-[1rem] lg:mr-[5rem] xl:mr-[7.5rem]"
           src="/X-Sign.png"
           alt="Close icon"
           width={20}
