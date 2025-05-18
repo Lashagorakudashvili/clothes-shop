@@ -83,6 +83,7 @@ const Navbar = () => {
         } else if (pathname === '/' || pathname.startsWith('/search')) {
             // Clear selected category when on homepage or search results page
             setSelectedCategory('');
+            setSearchQuery('');
         }
     }, [pathname]);
     
@@ -163,6 +164,10 @@ const Navbar = () => {
             if (isSearchExpanded) {
                 setIsSearchExpanded(false);
             }
+
+            if (pathname.length !== 0 && pathname === '/' || '/search?q') {
+                setSearchQuery('');
+            }
         }
     };
 
@@ -190,6 +195,7 @@ const Navbar = () => {
         setSelectedCategory('');
         router.push('/');
     };
+
 
     return (
         <header ref={navbarRef} className="relative shadow-sm py-4">
@@ -297,7 +303,7 @@ const Navbar = () => {
                                 </div>
                                 <button 
                                     onClick={applyFilter}
-                                    className="w-full mt-2 py-2 px-4 bg-black text-white rounded-md"
+                                    className="hover:cursor-pointer w-full mt-2 py-2 px-4 bg-black text-white rounded-md"
                                 >
                                     Apply Filter
                                 </button>
@@ -328,18 +334,28 @@ const Navbar = () => {
                     `}
                 >
                     <div className="relative w-full flex items-center">
+                        {/* phone search */}
                         {isSearchExpanded && (
                             <button 
                                 onClick={toggleSearch}
-                                className="mr-2 p-2 text-gray-900"
-                            >
+                                className="block md:hidden mr-2 p-2 text-gray-900">
                                 <Search size={22} />
                             </button>
                         )}
+                        {/* phone search */}
+                        {/* pc search */}
+                        {!isSearchExpanded && (
+                            <button 
+                                onClick={handleSearch}
+                                className="hidden md:block absolute left-3 top-2.5 text-gray-800">
+                                <Search className='hover:cursor-pointer' size={18} />
+                            </button>
+                        )}
+                        {/* pc search */}
                         <input
                             ref={searchInputRef}
                             type="text"
-                            placeholder="Search for products..."
+                            placeholder="Search"
                             className={`
                                 w-full py-2 pr-4 bg-gray-100 rounded-lg focus:outline-none text-gray-900
                                 ${isSearchExpanded ? 'pl-0' : 'pl-10'}
@@ -349,14 +365,6 @@ const Navbar = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             onKeyDown={handleKeyDown}
                         />
-                        {!isSearchExpanded && (
-                            <button 
-                                onClick={handleSearch}
-                                className="absolute left-3 top-2.5 text-gray-800"
-                            >
-                                <Search size={18} />
-                            </button>
-                        )}
                     </div>
                 </div>
 
