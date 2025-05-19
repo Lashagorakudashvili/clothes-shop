@@ -8,9 +8,9 @@ export default function Home() {
   return (
     <section className="font-sans">
 
-      <div className="border border-red-500 mt-[24px] bg-[url('/couple-crop.png')] bg-no-repeat bg-center mx-auto md:bg-right h-[663px] w-[100%] md:w-[90%]">
+      <div className="border mt-[24px] bg-[url('/couple-crop.png')] bg-no-repeat bg-center mx-auto md:bg-right h-[663px] w-[100%] md:w-[90%]">
 
-        <div className="border border-red-500">
+        <div>
           <Image 
             src="/star.png"
             alt="big star"
@@ -28,7 +28,7 @@ export default function Home() {
           />
         </div>
         
-        <div className="hidden md:block px-[15px] mt-[90px]">
+        <div className="hidden md:block px-[15px] mt-[95px]">
           <h1 className="font-bold text-[64px] leading-[64px] text-black">
             FIND CLOTHES<br />
             THAT MATCHES<br />
