@@ -198,7 +198,7 @@ const Navbar = () => {
 
 
     return (
-        <header ref={navbarRef} className="relative shadow-sm py-4">
+        <header ref={navbarRef} className="font-sans relative shadow-sm py-4">
             <div className="flex items-center justify-between">
                 {/* Mobile menu button */}
                 <button

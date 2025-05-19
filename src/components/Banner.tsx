@@ -10,7 +10,7 @@ export default function Banner() {
   if (!isVisible) return null;
 
   return (
-    <div className="bg-black h-[38px] flex items-center justify-between text-center mx-auto px-4">
+    <section className="font-sans bg-black h-[38px] flex items-center justify-between text-center mx-auto px-4">
       <div className="flex justify-between w-full items-center">
         <p className="text-[#FFFFFF] mx-auto text-[14px]">
           Sign up and get 20% off to your first order.{" "}
@@ -30,6 +30,6 @@ export default function Banner() {
           onClick={() => setIsVisible(false)}
         />
       </div>
-    </div>
+    </section>
   );
 }
