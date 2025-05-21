@@ -38,6 +38,7 @@ const Navbar = () => {
             document.head.removeChild(style);
         };
     }, []);
+    // Add animation keyframes to the component and handle window resizing
     
     // Handle window resize events - separated from animation effects
     useEffect(() => {
@@ -64,6 +65,7 @@ const Navbar = () => {
             };
         }
     }, [isSearchExpanded]);
+    // Handle window resize events - separated from animation effects
 
     // Focus on search input when expanded
     useEffect(() => {
@@ -71,6 +73,7 @@ const Navbar = () => {
             searchInputRef.current.focus();
         }
     }, [isSearchExpanded]);
+    // Focus on search input when expande
     
     // Parse the category from URL and set it in state on component mount AND clear when on homepage
     useEffect(() => {
@@ -86,6 +89,7 @@ const Navbar = () => {
             setSearchQuery('');
         }
     }, [pathname]);
+    // Parse the category from URL and set it in state on component mount AND clear when on homepage
     
     // Close dropdown menus when clicking outside, but with special search behavior
     useEffect(() => {
@@ -121,6 +125,7 @@ const Navbar = () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, [isShopDropdownOpen]);
+    // Close dropdown menus when clicking outside, but with special search behavior
     
     const toggleShopDropdown = () => {
         setIsShopDropdownOpen(!isShopDropdownOpen);
@@ -170,6 +175,7 @@ const Navbar = () => {
             }
         }
     };
+    // Handle search submission - modified to clear selected category
 
     // Handle Enter key press in search input
     const handleKeyDown = (event: React.KeyboardEvent) => {
@@ -177,6 +183,7 @@ const Navbar = () => {
             handleSearch();
         }
     };
+    // Handle Enter key press in search input
 
     // Apply category filter
     const applyFilter = () => {
@@ -189,14 +196,17 @@ const Navbar = () => {
         setIsShopDropdownOpen(false);
         setIsMenuOpen(false);
     };
+    // Apply category filter
 
     // Clear filter and navigate to home
     const goToHome = () => {
         setSelectedCategory('');
         router.push('/');
     };
+    // Clear filter and navigate to home
 
 
+    
     return (
         <header ref={navbarRef} className="font-sans relative shadow-sm py-4">
             <div className="flex items-center justify-between">
@@ -210,6 +220,7 @@ const Navbar = () => {
                     <div className={`w-6 h-0.5 bg-black mb-1.5 transition-all ${isMenuOpen ? 'opacity-0' : ''}`}></div>
                     <div className={`w-6 h-0.5 bg-black transition-all ${isMenuOpen ? '-rotate-45 -translate-y-2' : ''}`}></div>
                 </button>
+                {/* Mobile menu button */}
 
                 {/* Logo - positioned with proper padding based on screen size */}
                 <Link
@@ -224,6 +235,7 @@ const Navbar = () => {
                 >
                     SHOP.CO
                 </Link>
+                {/* Logo - positioned with proper padding based on screen size */}
 
                 {/* Navigation for desktop */}
                 <nav
@@ -265,7 +277,7 @@ const Navbar = () => {
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'casual' ? '' : 'casual')} 
                                         className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'casual' ? 'bg-black text-white rounded-md' : 'hover:bg-gray-100'
+                                            selectedCategory === 'casual' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
                                         }`}
                                     >
                                         Casual
@@ -275,7 +287,7 @@ const Navbar = () => {
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'formal' ? '' : 'formal')} 
                                         className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'formal' ? 'bg-black text-white rounded-md' : 'hover:bg-gray-100'
+                                            selectedCategory === 'formal' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
                                         }`}
                                     >
                                         Formal
@@ -285,7 +297,7 @@ const Navbar = () => {
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'party' ? '' : 'party')} 
                                         className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'party' ? 'bg-black text-white rounded-md' : 'hover:bg-gray-100'
+                                            selectedCategory === 'party' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
                                         }`}
                                     >
                                         Party
@@ -295,7 +307,7 @@ const Navbar = () => {
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'gym' ? '' : 'gym')} 
                                         className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'gym' ? 'bg-black text-white rounded-md' : 'hover:bg-gray-100'
+                                            selectedCategory === 'gym' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
                                         }`}
                                     >
                                         Gym
@@ -303,12 +315,14 @@ const Navbar = () => {
                                 </div>
                                 <button 
                                     onClick={applyFilter}
-                                    className="hover:cursor-pointer w-full mt-2 py-2 px-4 bg-black text-white rounded-md"
+                                    className="hover:cursor-pointer w-full mt-2 py-2 px-4 bg-black text-white rounded-3xl"
                                 >
                                     Apply Filter
                                 </button>
                             </div>
                         </div>
+                        {/* Desktop Shop dropdown menu */}
+                        
                     </div>
                     <Link href="#" className="text-gray-900 hover:text-black font-medium">
                         On Sale
@@ -320,6 +334,7 @@ const Navbar = () => {
                         Brands
                     </Link>
                 </nav>
+                {/* Navigation for desktop */}
 
                 {/* Search */}
                 <div 
@@ -343,6 +358,7 @@ const Navbar = () => {
                             </button>
                         )}
                         {/* phone search */}
+                        
                         {/* pc search */}
                         {!isSearchExpanded && (
                             <button 
@@ -352,6 +368,7 @@ const Navbar = () => {
                             </button>
                         )}
                         {/* pc search */}
+                        
                         <input
                             ref={searchInputRef}
                             type="text"
@@ -367,6 +384,8 @@ const Navbar = () => {
                         />
                     </div>
                 </div>
+                {/* Search */}
+
 
                 {/* Mobile Search Icon */}
                 <div className={`md:hidden ml-auto ${isSearchExpanded ? 'hidden' : 'flex'}`}>
@@ -377,6 +396,7 @@ const Navbar = () => {
                         <Search size={22} />
                     </button>
                 </div>
+                {/* Mobile Search Icon */}
 
                 {/* User Actions - moved to the right with added padding for smaller screens */}
                 <div className={`
@@ -393,8 +413,10 @@ const Navbar = () => {
                         <User size={22} strokeWidth={2} />
                     </Link>
                 </div>
+                {/* User Actions - moved to the right with added padding for smaller screens */}
             </div>
             
+
             {/* Mobile dropdown menu - positioned below the header */}
             <div 
                 className={`
@@ -426,7 +448,7 @@ const Navbar = () => {
                                         <button 
                                             onClick={() => setSelectedCategory(selectedCategory === category ? '' : category)}
                                             className={`block w-full rounded px-4 py-2 ${
-                                                selectedCategory === category ? 'bg-black text-white rounded-md' : 'hover:bg-gray-100'
+                                                selectedCategory === category ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
                                             }`}
                                         >
                                             {category.charAt(0).toUpperCase() + category.slice(1)}
@@ -436,12 +458,13 @@ const Navbar = () => {
                                 <div className="px-8 py-3 flex justify-center">
                                     <button 
                                         onClick={applyFilter}
-                                        className="w-full py-2 px-4 bg-black text-white rounded-md"
+                                        className="w-full py-2 px-4 bg-black text-white rounded-3xl"
                                     >
                                         Apply Filter
                                     </button>
                                 </div>
                             </div>
+                            {/* Mobile Shop dropdown submenu */}
                         </div>
                     </li>
                     <li className="border-b border-gray-100">
@@ -461,6 +484,7 @@ const Navbar = () => {
                     </li>
                 </ul>
             </div>
+            {/* Mobile dropdown menu - positioned below the header */}
         </header>
     );
 };
