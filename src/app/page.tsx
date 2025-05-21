@@ -55,7 +55,7 @@ export default function Home() {
     <section className="font-sans">
       <div className="flex flex-col">
         {/* Main content section */}
-        <div className="border mt-[24px] md:bg-[url('/couple-crop.png')] bg-no-repeat bg-center mx-auto md:bg-right md:h-[663px] w-[100%] md:w-[90%]">
+        <div className="border border-transparent mt-[24px] md:bg-[url('/couple-crop-desktop(no-background).png')] bg-no-repeat bg-center mx-auto md:bg-right md:h-[663px] w-[100%] md:w-[90%]">
           {/* desktop stars */}
           <div>
             <Image 
@@ -161,7 +161,7 @@ export default function Home() {
         {/* Mobile couple with stars - outside the previous container to avoid margin issues */}
         <div className="block md:hidden w-full">
           <Image 
-            src="/couple-stars.png"
+            src="/couple-stars-mobile(no-background).png"
             alt="couple stars"
             width={1920}
             height={1080}
