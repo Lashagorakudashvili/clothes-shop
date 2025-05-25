@@ -53,20 +53,22 @@ export default function Home() {
   }, []);
 
 
-
   // Scroll the mobile carousel exactly one product at a time.
-  const scrollCarousel = (direction: number) => {
-    if (mobileCarouselRef.current) {
-      const productElem = mobileCarouselRef.current.querySelector(".snap-center");
+  const scrollCarousel = (carouselRef: React.RefObject<HTMLDivElement>, direction: number) => {
+    if (carouselRef.current) {
+      const productElem = carouselRef.current.querySelector(".snap-center") as HTMLElement;
       if (productElem) {
-        const productWidth = productElem.clientWidth + 16; // assuming space-x-4 equals 16px gap.
-        mobileCarouselRef.current.scrollBy({
+        const productWidth = productElem.clientWidth + 16; // 16px = space-x-4
+        carouselRef.current.scrollBy({
           left: direction * productWidth,
           behavior: "smooth",
         });
       }
     }
   };
+
+  const carouselRef1 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
+  const carouselRef2 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 // Scroll the mobile carousel exactly one product at a time.
 
 
@@ -79,7 +81,7 @@ interface Product {
   originalPrice?: number;
   discount?: string;
   // Star rating image filename
-  stars: "4-5-stars.png" | "3-5-stars.png";
+  stars: "3-5-stars.png" | "4-5-stars.png";
 }
 // Define the Product interface
 
@@ -116,7 +118,7 @@ const products: Product[] = [
     price: 130,
     originalPrice: 160,
     discount: "30%",
-    stars: "3-5-stars.png",
+    stars: "4-5-stars.png",
   },
 ];
 // Updated products array using the provided image filenames in order
@@ -167,6 +169,107 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   );
 };
 // ProductCard: now fully clickable via wrapping it inside a Link.
+
+
+// Define the Product2 interface
+interface Product2 {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+  discount?: string;
+  // Star rating image filename
+  stars: "3-stars.png" | "3-5-stars.png" | "4-stars.png" | "4-5-stars.png" | "5-stars.png";
+}
+// Define the Product2 interface
+
+
+// Updated products2 array using the provided image filenames in order
+const products2: Product2[] = [
+  {
+    id: 1,
+    name: "Vertical Striped Shirt",
+    image: "/green-b-up.png",
+    price: 212,
+    originalPrice: 232,
+    discount: "20%",
+    stars: "5-stars.png",
+  },
+  {
+    id: 2,
+    name: "Courage Graphic T-Shirt",
+    image: "/orange-t.png",
+    price: 145,
+    stars: "4-stars.png",
+  },
+  {
+    id: 3,
+    name: "Loose Fit Bermuda Shorts",
+    image: "/jorts.png",
+    price: 80,
+    stars: "3-stars.png",
+  },
+  {
+    id: 4,
+    name: "Faded Skinny Jeans",
+    image: "/b-jeans.png",
+    price: 210,
+    stars: "4-5-stars.png",
+  },
+];
+// Updated products2 array using the provided image filenames in order
+
+
+// ProductCard2: now fully clickable via wrapping it inside a Link.
+const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
+  return (
+    <Link href="/coming-soon" className="cursor-pointer">
+      <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={295}
+          height={298}
+          className="object-cover mb-4"
+        />
+        <h2 className="text-[20px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
+        <div className="mb-2 w-full flex justify-start">
+          <Image
+            src={`/${product.stars}`}
+            alt="rating"
+            width={104}
+            height={18}
+            className="object-contain"
+          />
+          {product.stars === "3-stars.png" ? (
+            <span className="ml-[13px] text-black">3/5</span>
+            ) : product.stars === "4-stars.png" ? (
+            <span className="ml-[13px] text-black">4/5</span>
+            ) : product.stars === "4-5-stars.png" ? (
+            <span className="ml-[13px] text-black">4.5/5</span>
+            ) : product.stars === "5-stars.png" ? (
+            <span className="ml-[13px] text-black">5/5</span>
+            ) : null}
+        </div>
+        <div className="flex items-center w-full mb-2">
+          <div className="text-[24px] text-2xl font-bold text-black text-left">${product.price}</div>
+          {product.originalPrice && (
+            <div className="text-[24px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
+              ${product.originalPrice}
+            </div>
+          )}
+          {product.discount && (
+            <div className="text-[12px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
+              {product.discount}
+            </div>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
+};
+// ProductCard2: now fully clickable via wrapping it inside a Link.
 
 
 
@@ -336,7 +439,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       <section className="my-12">
         {/* main div */}
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl text-[75px] text-center mt-[72px] font-extrabold mb-4 text-black">New Arrivals</h2>
+          <h2 className="text-2xl text-[50px] sm:text-[75px] text-center mt-[72px] font-extrabold mb-4 text-black">New Arrivals</h2>
           
           {/* Desktop view: Grid layout */}
           <div className="hidden md:grid grid-cols-4 gap-4">
@@ -351,7 +454,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             
             {/* Left Arrow Button */}
             <button
-              onClick={() => scrollCarousel(-1)}
+              onClick={() => scrollCarousel(carouselRef1, -1)}
               className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
             >
               <svg
@@ -368,7 +471,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
             
             {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
             <div
-              ref={mobileCarouselRef}
+              ref={carouselRef1}
               className="flex overflow-x-auto space-x-4 scroll-smooth snap-x snap-mandatory px-[10vw]"
             >
               {products.map((product) => (
@@ -381,7 +484,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
 
             {/* Right Arrow Button */}
             <button
-              onClick={() => scrollCarousel(1)}
+              onClick={() => scrollCarousel(carouselRef1, 1)}
               className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
             >
               <svg
@@ -411,10 +514,144 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
       {/* Section 2 (Product Grid / Carousel for New Arrivals) */}
 
       
+      {/* Section 3 (Product Grid / Carousel for Top Selling) */}
+      <section className="my-12">
+        {/* main div */}
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl text-[50px] sm:text-[75px] text-center mt-[128px] font-extrabold mb-4 text-black">TOP SELLING</h2>
+          
+          {/* Desktop view: Grid layout */}
+          <div className="hidden md:grid grid-cols-4 gap-4">
+            {products2.map((product) => (
+              <ProductCard2 key={product.id} product={product} />
+            ))}
+          </div>
+          {/* Desktop view: Grid layout */}
+          
+          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+          <div className="md:hidden relative">
+            
+            {/* Left Arrow Button */}
+            <button
+              onClick={() => scrollCarousel(carouselRef2, -1)}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            {/* Left Arrow Button */}
+            
+            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
+            <div
+              ref={carouselRef2}
+              className="flex overflow-x-auto space-x-4 scroll-smooth snap-x snap-mandatory px-[10vw]"
+            >
+              {products2.map((product) => (
+                <div key={product.id} className="flex-shrink-0 w-[80vw] snap-center">
+                  <ProductCard2 product={product} />
+                </div>
+              ))}
+            </div>
+            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
 
-      {/* ///////////////////////////////// */}
+            {/* Right Arrow Button */}
+            <button
+              onClick={() => scrollCarousel(carouselRef2, 1)}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            {/* Right Arrow Button */}
+          </div>
+          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+        </div>
+        {/* main div */}
       
-      {/* ///////////////////////////////// */}
+        {/* "View all" Button below all content */}
+        <div className="flex justify-center mt-8">
+          <Link href="/view-all" className="cursor-pointer text-black text-lg hover:underline">
+            View All
+          </Link>
+        </div>
+        {/* "View all" Button below all content */}
+      </section>
+      {/* Section 3 (Product Grid / Carousel for Top Selling) */}
+      
+
+        
+      {/*/////////////////////////////////////////////////////*/}
+      <section className="mt-[150px] py-8">
+        <span className="text-black block text-center px-[3rem] font-extrabold text-[50px] md:text-[50px] xl:text-[65px] 2xl:text-[75px]">
+          BROWSE BY DRESS STYLE
+        </span>
+
+        <div className="mt-[64px] container mx-auto grid grid-cols-1 grid-rows-4 gap-4 px-4 md:grid-cols-3 md:grid-rows-2">
+          
+          {/* Casual */}
+          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1">
+            <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Casual</span>
+            <Image
+              src="/casual-img.png"
+              alt="casual img"
+              width={407}
+              height={289}
+              className="rounded-3xl w-full h-full object-cover"
+            />
+          </Link>
+
+          {/* Formal */}
+          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1">
+            <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Formal</span>
+            <Image
+              src="/formal-img.png"
+              alt="formal img"
+              width={684}
+              height={289}
+              className="rounded-3xl w-full h-full object-cover"
+            />
+          </Link>
+
+          {/* Party */}
+          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1">
+            <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Party</span>
+            <Image
+              src="/party-img.png"
+              alt="party img"
+              width={684}
+              height={289}
+              className="rounded-3xl w-full h-full object-cover"
+            />
+          </Link>
+
+          {/* Gym */}
+          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1">
+            <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Gym</span>
+            <Image
+              src="/gym-img.png"
+              alt="gym img"
+              width={407}
+              height={289}
+              className="rounded-3xl w-full h-full object-cover"
+            />
+          </Link>
+        </div>
+      </section>
+      {/*/////////////////////////////////////////////////////*/}
 
 
 
