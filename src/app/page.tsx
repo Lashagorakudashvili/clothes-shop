@@ -128,7 +128,7 @@ const products: Product[] = [
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link href="/coming-soon" className="cursor-pointer">
-      <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6">
+      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6">
         <Image
           src={product.image}
           alt={product.name}
@@ -136,30 +136,30 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           height={298}
           className="object-cover mb-4"
         />
-        <h2 className="text-[20px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
+        <h2 className="text-[15px] md:text-[16.5px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
         <div className="mb-2 w-full flex justify-start">
           <Image
             src={`/${product.stars}`}
             alt="rating"
             width={104}
             height={18}
-            className="object-contain"
+            className="object-contain md:w-[70px] lg:w-[104px]"
           />
           {product.stars === "4-5-stars.png" ? (
-            <span className="ml-[13px] text-black">4.5/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] md:mt-[0px] ml-[13px] text-black">4.5/5</span>
           ) :
-            <span className="ml-[13px] text-black">3.5/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[3.5px] md:mt-[0px] ml-[13px] text-black">3.5/5</span>
           }
         </div>
         <div className="flex items-center w-full mb-2">
-          <div className="text-[24px] text-2xl font-bold text-black text-left">${product.price}</div>
+          <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black text-left">${product.price}</div>
           {product.originalPrice && (
-            <div className="text-[24px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
+            <div className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
               ${product.originalPrice}
             </div>
           )}
           {product.discount && (
-            <div className="text-[12px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
+            <div className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
               {product.discount}
             </div>
           )}
@@ -205,7 +205,7 @@ const products2: Product2[] = [
   },
   {
     id: 3,
-    name: "Loose Fit Bermuda Shorts",
+    name: "Loose Fit Shorts",
     image: "/jorts.png",
     price: 80,
     stars: "3-stars.png",
@@ -225,7 +225,7 @@ const products2: Product2[] = [
 const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
   return (
     <Link href="/coming-soon" className="cursor-pointer">
-      <div className="flex flex-col items-center bg-white rounded-lg shadow-md p-6">
+      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6">
         <Image
           src={product.image}
           alt={product.name}
@@ -233,34 +233,34 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
           height={298}
           className="object-cover mb-4"
         />
-        <h2 className="text-[20px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
+        <h2 className="text-[15px] md:text-[16px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
         <div className="mb-2 w-full flex justify-start">
           <Image
             src={`/${product.stars}`}
             alt="rating"
             width={104}
             height={18}
-            className="object-contain"
+            className="object-contain md:w-[70px] lg:w-[104px]"
           />
           {product.stars === "3-stars.png" ? (
-            <span className="ml-[13px] text-black">3/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[7px] md:mt-[0px] ml-[13px] text-black">3/5</span>
             ) : product.stars === "4-stars.png" ? (
-            <span className="ml-[13px] text-black">4/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] md:mt-[0px] ml-[13px] text-black">4/5</span>
             ) : product.stars === "4-5-stars.png" ? (
-            <span className="ml-[13px] text-black">4.5/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] ml-[13px] md:mt-[0px] text-black">4.5/5</span>
             ) : product.stars === "5-stars.png" ? (
-            <span className="ml-[13px] text-black">5/5</span>
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] ml-[13px] md:mt-[0px] text-black">5/5</span>
             ) : null}
         </div>
         <div className="flex items-center w-full mb-2">
-          <div className="text-[24px] text-2xl font-bold text-black text-left">${product.price}</div>
+          <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black text-left">${product.price}</div>
           {product.originalPrice && (
-            <div className="text-[24px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
+            <div className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
               ${product.originalPrice}
             </div>
           )}
           {product.discount && (
-            <div className="text-[12px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
+            <div className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
               {product.discount}
             </div>
           )}
@@ -593,8 +593,7 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
       {/* Section 3 (Product Grid / Carousel for Top Selling) */}
       
 
-        
-      {/*/////////////////////////////////////////////////////*/}
+      {/* Section 4 clothe styles  */}
       <section className="mt-[150px] py-8">
         <span className="text-black block text-center px-[3rem] font-extrabold text-[50px] md:text-[50px] xl:text-[65px] 2xl:text-[75px]">
           BROWSE BY DRESS STYLE
@@ -651,6 +650,12 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
           </Link>
         </div>
       </section>
+      {/* Section 4 clothe styles  */}
+
+
+
+      {/*/////////////////////////////////////////////////////*/}
+      
       {/*/////////////////////////////////////////////////////*/}
 
 
