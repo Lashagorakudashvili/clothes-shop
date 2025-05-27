@@ -714,7 +714,7 @@ const Cards: React.FC = () => {
       
 
       {/* Section 4 clothe styles  */}
-      <section className="mt-[150px] py-8">
+      <section className="mt-[100px] md:mt-[150px] py-8">
         <span className="text-black block text-center px-[3rem] font-extrabold text-[40px] md:text-[50px] xl:text-[65px] 2xl:text-[75px]">
           BROWSE BY DRESS STYLE
         </span>
