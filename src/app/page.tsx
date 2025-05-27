@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -69,6 +69,7 @@ export default function Home() {
 
   const carouselRef1 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
   const carouselRef2 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
+  const carouselRef3 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 // Scroll the mobile carousel exactly one product at a time.
 
 
@@ -273,6 +274,125 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
 
 
 
+/////////////////////////////////////////////
+const Cards: React.FC = () => {
+  const cardsData = [
+    {
+      imgSrc: "/5-stars.png",
+      name: "Sarah M.",
+      chkMrk: "/green-check-mark.png",
+      text: "I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.",
+    },
+    {
+      imgSrc: "/5-stars.png",
+      name: "Alex K.",
+      chkMrk: "/green-check-mark.png",
+      text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
+    },
+    {
+      imgSrc: "/5-stars.png",
+      name: "James L.",
+      chkMrk: "/green-check-mark.png",
+      text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
+    },
+    {
+      imgSrc: "/5-stars.png",
+      name: "Lara T.",
+      chkMrk: "/green-check-mark.png",
+      text: "Great experience with Shop.co! The clothes arrived fast, fit perfectly, and looked just like the pictures.",
+    },
+    {
+      imgSrc: "/5-stars.png",
+      name: "David R.",
+      chkMrk: "/green-check-mark.png",
+      text: "The customer service is outstanding, and the clothes are top-notch quality. I'm a fan!",
+    },
+    {
+      imgSrc: "/5-stars.png",
+      name: "Emily S.",
+      chkMrk: "/green-check-mark.png",
+      text: "Stylish, affordable, and comfortable – Shop.co has earned a loyal customer in me.",
+    },
+  ];
+
+  // The inner component that manages each card with an IntersectionObserver for horizontal visibility blur effect.
+  const CardItem: React.FC<{
+    card: { imgSrc: string; name: string; chkMrk: string; text: string };
+  }> = ({ card }) => {
+    const cardRef = useRef<HTMLDivElement>(null);
+    const [isFullyVisible, setIsFullyVisible] = useState(true);
+
+    useEffect(() => {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Compute horizontal intersection ratio.
+            const horizontalRatio =
+              entry.intersectionRect.width / entry.boundingClientRect.width;
+            // Only consider horizontal visibility when deciding the blur.
+            setIsFullyVisible(horizontalRatio >= 0.95);
+          });
+        },
+        { threshold: [0, 0.25, 0.5, 0.75, 1] }
+      );
+
+      if (cardRef.current) {
+        observer.observe(cardRef.current);
+      }
+
+      return () => {
+        if (cardRef.current) {
+          observer.unobserve(cardRef.current);
+        }
+      };
+    }, []);
+
+    return (
+      <div
+        ref={cardRef}
+        className={`review-cards snap-center shrink-0 w-[350px] sm:w-[400px] md:w-[360px] lg:w-[300px] xl:w-[405px] flex flex-col h-[290px] md:h-[290px] border rounded-lg shadow bg-white overflow-hidden transition-all duration-300 ${
+          !isFullyVisible ? "filter blur-[2px]" : ""
+        }`}
+      >
+        <Image
+          width={138}
+          height={22}
+          src={card.imgSrc}
+          alt={card.imgSrc}
+          className="ml-4 mt-4 object-cover"
+        />
+        <div className="mt-3 px-4 py-2 bg-gray-100 text-sm text-black flex items-center">
+          <span className="text-[20px] font-extrabold">{card.name}</span>
+          <Image
+            width={24}
+            height={24}
+            src={card.chkMrk}
+            alt={card.chkMrk}
+            className="ml-2"
+          />
+        </div>
+        <div className="flex-1 p-4 ">
+          <p className="text-gray-700">{card.text}</p>
+        </div>
+      </div>
+    );
+  };
+
+  return (
+    <div
+      ref={carouselRef3}
+      className="no-scrollbar-md-up flex overflow-x-auto space-x-4 snap-x snap-mandatory px-4 scroll-smooth"
+    >
+      {cardsData.map((card, index) => (
+        <CardItem card={card} key={index} />
+      ))}
+    </div>
+  );
+};
+/////////////////////////////////////////////////////
+
+
+
   return (
     <main className="font-sans">
       {/* Section 1 (Couple Image, Banner Info, and Marquee) */}
@@ -439,7 +559,7 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
       <section className="my-12">
         {/* main div */}
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl text-[50px] sm:text-[75px] text-center mt-[72px] font-extrabold mb-4 text-black">New Arrivals</h2>
+          <h2 className="text-2xl text-[40px] sm:text-[75px] text-center mt-[72px] font-extrabold mb-4 text-black">New Arrivals</h2>
           
           {/* Desktop view: Grid layout */}
           <div className="hidden md:grid grid-cols-4 gap-4">
@@ -518,7 +638,7 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
       <section className="my-12">
         {/* main div */}
         <div className="container mx-auto px-4">
-          <h2 className="text-2xl text-[50px] sm:text-[75px] text-center mt-[128px] font-extrabold mb-4 text-black">TOP SELLING</h2>
+          <h2 className="text-2xl text-[40px] sm:text-[75px] text-center mt-[128px] font-extrabold mb-4 text-black">TOP SELLING</h2>
           
           {/* Desktop view: Grid layout */}
           <div className="hidden md:grid grid-cols-4 gap-4">
@@ -595,7 +715,7 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
 
       {/* Section 4 clothe styles  */}
       <section className="mt-[150px] py-8">
-        <span className="text-black block text-center px-[3rem] font-extrabold text-[50px] md:text-[50px] xl:text-[65px] 2xl:text-[75px]">
+        <span className="text-black block text-center px-[3rem] font-extrabold text-[40px] md:text-[50px] xl:text-[65px] 2xl:text-[75px]">
           BROWSE BY DRESS STYLE
         </span>
 
@@ -655,7 +775,49 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
 
 
       {/*/////////////////////////////////////////////////////*/}
-      
+        <section className="mt-[150px] py-8">
+          <div className="container mx-auto">
+            <div className="flex flex-wrap items-center justify-between px-4 gap-4">
+              <div className="min-w-0 flex-1">
+                <span className="text-black font-extrabold text-[28px] md:text-[50px] xl:text-[60px] 2xl:text-[70px] break-words">
+                  OUR HAPPY CUSTOMERS
+                </span>
+              </div>
+
+              {/* arrows */}
+              <div className="mt-[2.5rem] md:mt-[0] flex-shrink-0 flex items-center gap-2">
+                {/* left arrow */}
+                <button
+                  onClick={() => scrollCarousel(carouselRef3, -1)}
+                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                  </svg>
+                </button>
+                {/* left arrow */}
+
+                {/* right arrow */}
+                <button
+                  onClick={() => scrollCarousel(carouselRef3, 1)}
+                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow"
+                >
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
+                </button>
+                {/* right arrow */}
+              </div>
+              {/* arrows */}
+            </div>
+
+            {/* card list */}
+            <div className="mt-8">
+              <Cards />
+            </div>
+            {/* card list */}
+          </div>
+        </section>
       {/*/////////////////////////////////////////////////////*/}
 
 
