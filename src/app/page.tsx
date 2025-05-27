@@ -775,7 +775,7 @@ const Cards: React.FC = () => {
 
 
       {/*/////////////////////////////////////////////////////*/}
-        <section className="mt-[150px] py-8">
+        <section className="mt-[23px] md:mt-[80px] py-8">
           <div className="container mx-auto">
             <div className="flex flex-wrap items-center justify-between px-4 gap-4">
               <div className="min-w-0 flex-1">
