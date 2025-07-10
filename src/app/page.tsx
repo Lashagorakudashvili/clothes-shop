@@ -273,8 +273,7 @@ const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
 // ProductCard2: now fully clickable via wrapping it inside a Link.
 
 
-
-/////////////////////////////////////////////
+// logic for section 5 (user reviews) //
 const Cards: React.FC = () => {
   const cardsData = [
     {
@@ -389,9 +388,14 @@ const Cards: React.FC = () => {
     </div>
   );
 };
-/////////////////////////////////////////////////////
+// logic for section 5 (user reviews) //
 
 
+/* FOR SECTION 6 EMAIL SUB*/
+const [email, setEmail] = useState("");
+/* FOR SECTION 6 EMAIL SUB*/
+
+  
 
   return (
     <main className="font-sans">
@@ -773,8 +777,7 @@ const Cards: React.FC = () => {
       {/* Section 4 clothe styles  */}
 
 
-
-      {/*/////////////////////////////////////////////////////*/}
+      {/* Section 5 user reviews */}
         <section className="mt-[23px] md:mt-[80px] py-8">
           <div className="container mx-auto">
             <div className="flex flex-wrap items-center justify-between px-4 gap-4">
@@ -818,6 +821,66 @@ const Cards: React.FC = () => {
             {/* card list */}
           </div>
         </section>
+      {/* Section 5 user reviews */}
+
+
+      {/* section 6 (email subs) */}
+        <section className="container mx-auto pt-[50px] pl-[1rem] pr-[1rem]">
+          <div className="bg-black rounded-3xl flex flex-col md:flex-row md:items-center md:justify-between">
+            {/* Text */}
+              <div className="text-[30px] md:text-[30px] lg:text-[40px] font-extrabold pt-[25px] pb-[5px] pl-[20px] pr-[30px]  md:pt-[43px] md:pb-[43px] md:pl-[64px] md:pr-[0px] text-center md:text-left md:w-1/2">
+                STAY UP TO DATE ABOUT OUR LATEST OFFERS
+              </div>
+            {/* Text */}
+            {/* Form */}
+              <div className="w-full md:w-1/2 flex justify-center md:justify-end  pb-[20px] pl-[24px] pr-[23px]  md:pt-[36px] md:pb-[36px] md:pr-[64px]">
+                <form
+                  className="w-full md:w-[90%] bg-transparent rounded-3xl flex flex-col items-center md:items-end gap-4 p-4 md:p-2 shadow"
+                  onSubmit={(e) => {
+                  e.preventDefault();
+                  if (email.trim()) {
+                    console.log("Submitted email:", email);
+                          // Clear the field
+                          setEmail("");
+                      }
+                    }
+                  }
+                >
+                <div className="relative w-full md:w-[250px] lg:w-[349px]">
+                  <Image
+                    src="/Email-img.png"
+                    alt="Email"
+                    width={24}
+                    height={24}
+                    className="absolute left-4 top-1/2 -translate-y-1/2"
+                  />
+                  <input
+                    type="email"
+                    placeholder="Enter your email address"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="w-full h-[50px] rounded-3xl pl-12 pr-6 py-4 text-black text-lg outline-none focus:ring-2 focus:ring-gray-400 bg-white"
+                    aria-label="Email address"
+                    autoComplete="email"
+                  />
+                </div>
+                <button
+                    type="submit"
+                    className="hover:cursor-pointer w-full md:w-[250px] lg:w-[349px] md:text-[15px] lg:text-[16px] h-[50px] bg-white text-black font-semibold rounded-3xl px-8 py-4 hover:bg-gray-100 transition border border-black flex items-center justify-center">
+                    Subscribe to Newsletter
+                </button>
+               </form>
+              </div>
+            {/* Form */}
+          </div>
+        </section>
+      {/* section 6 (email subs) */}
+
+
+
+      {/*/////////////////////////////////////////////////////*/}
+      
       {/*/////////////////////////////////////////////////////*/}
 
 
