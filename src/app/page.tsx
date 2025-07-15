@@ -398,9 +398,9 @@ const [email, setEmail] = useState("");
   
 
   return (
-    <main className="font-sans">
+    <main className="flex flex-col min-h-screen font-sans">
       {/* Section 1 (Couple Image, Banner Info, and Marquee) */}
-      <section>
+      <section className="mt-[100px]">
         {/* main div */}
         <div className="flex flex-col">
           <div
@@ -430,7 +430,7 @@ const [email, setEmail] = useState("");
               <h1 className="font-bold text-[64px] leading-[64px] text-black">
                 FIND CLOTHES
                 <br />
-                THAT MATCH
+                THAT MATCHES
                 <br />
                 YOUR STYLE
               </h1>
@@ -449,7 +449,7 @@ const [email, setEmail] = useState("");
                   <h1 className="font-bold text-[50px] leading-[50px] text-black">
                     FIND CLOTHES
                     <br />
-                    THAT MATCH
+                    THAT MATCHES
                     <br />
                     YOUR STYLE
                   </h1>
@@ -466,8 +466,8 @@ const [email, setEmail] = useState("");
             {/* Call-to-Action Button (Shop Now) */}
             <div className="flex justify-center md:justify-start">
               <Link href="/view-all">
-                <button className="bg-black rounded-3xl mt-[32px] md:ml-[15px] hover:cursor-pointer text-center w-[320px] md:w-[210px] h-[52px]">
-                  <span className="text-white font-medium">Shop Now</span>
+                <button className="bg-black rounded-3xl mt-[32px] md:ml-[15px] hover:cursor-pointer text-center w-[320px] md:w-[210px] h-[52px] transition-all duration-200 transform hover:scale-105">
+                  <span className="text-white font-medium ">Shop Now</span>
                 </button>
               </Link>
             </div>
@@ -532,7 +532,7 @@ const [email, setEmail] = useState("");
           {/* Mobile Couple Image */}
           
           {/* Brand Scrolling Marquee */}
-          <div className="-mt-[1px] w-full bg-black h-[122px] overflow-hidden relative">
+          <div className="-mt-[1px] w-full bg-black h-[175px] overflow-hidden relative">
             <div ref={marqueeRef} className="flex whitespace-nowrap absolute h-full">
               <div className="marquee-content flex items-center h-full">
                 {brands.map((brand, index) => (
@@ -876,15 +876,6 @@ const [email, setEmail] = useState("");
           </div>
         </section>
       {/* section 6 (email subs) */}
-
-
-
-      {/*/////////////////////////////////////////////////////*/}
-      
-      {/*/////////////////////////////////////////////////////*/}
-
-
-
     </main>
   );
 }

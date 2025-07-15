@@ -208,7 +208,7 @@ const Navbar = () => {
 
     
     return (
-        <header ref={navbarRef} className="font-sans relative shadow-sm py-4">
+        <header ref={navbarRef} className="fixed w-full z-50 bg-white mt-[39px] md:mt-[38px] font-sans shadow-sm py-4">
             <div className="flex items-center justify-between">
                 {/* Mobile menu button */}
                 <button
@@ -252,9 +252,11 @@ const Navbar = () => {
                     <div className="relative group flex items-center space-x-1">
                         <button 
                             onClick={toggleShopDropdown} 
-                            className="flex items-center text-gray-900 hover:text-black focus:outline-none font-medium"
+                            className="transition-all duration-200 transform hover:scale-105 flex items-center text-gray-900 hover:text-black focus:outline-none font-medium group"
                         >
-                            <span className='hover:cursor-pointer'>Shop</span>
+                            <span className='hover:cursor-pointer'>
+                                Shop
+                            </span>
                             <div className="ml-1">
                                 <Image
                                     className={`hover:cursor-pointer transition-transform duration-500 ${isShopDropdownOpen ? 'rotate-180' : ''}`}
@@ -276,9 +278,11 @@ const Navbar = () => {
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'casual' ? '' : 'casual')} 
-                                        className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'casual' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
-                                        }`}
+                                        className={`
+                                            px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
+                                            ${selectedCategory === 'casual' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            hover:border-black
+                                        `}
                                     >
                                         Casual
                                     </button>
@@ -286,9 +290,11 @@ const Navbar = () => {
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'formal' ? '' : 'formal')} 
-                                        className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'formal' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
-                                        }`}
+                                        className={`
+                                            px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
+                                            ${selectedCategory === 'formal' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            hover:border-black
+                                        `}
                                     >
                                         Formal
                                     </button>
@@ -296,9 +302,11 @@ const Navbar = () => {
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'party' ? '' : 'party')} 
-                                        className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'party' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
-                                        }`}
+                                        className={`
+                                            px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
+                                            ${selectedCategory === 'party' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            hover:border-black
+                                        `}
                                     >
                                         Party
                                     </button>
@@ -306,31 +314,34 @@ const Navbar = () => {
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
                                         onClick={() => setSelectedCategory(selectedCategory === 'gym' ? '' : 'gym')} 
-                                        className={`px-4 py-2 cursor-pointer w-full text-left ${
-                                            selectedCategory === 'gym' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'
-                                        }`}
+                                        className={`
+                                            px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
+                                            ${selectedCategory === 'gym' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            hover:border-black
+                                        `}
                                     >
                                         Gym
                                     </button>
                                 </div>
-                                <button 
-                                    onClick={applyFilter}
-                                    className="hover:cursor-pointer w-full mt-2 py-2 px-4 bg-black text-white rounded-3xl"
-                                >
-                                    Apply Filter
-                                </button>
+                                <div className="flex justify-center">
+                                    <button 
+                                        onClick={applyFilter}
+                                        className="hover:cursor-pointer w-[90%] mt-2 py-2 px-4 bg-black text-white rounded-3xl transition-all duration-200 transform hover:scale-105"
+                                    >
+                                        Apply Filter
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         {/* Desktop Shop dropdown menu */}
-                        
                     </div>
-                    <Link href="#" className="text-gray-900 hover:text-black font-medium">
+                    <Link href="#" className="text-gray-900 hover:text-black font-medium transition-all duration-200 transform hover:scale-105">
                         On Sale
                     </Link>
-                    <Link href="#" className="text-gray-900 hover:text-black font-medium">
+                    <Link href="#" className="text-gray-900 hover:text-black font-medium transition-all duration-200 transform hover:scale-105">
                         New Arrivals
                     </Link>
-                    <Link href="#" className="text-gray-900 hover:text-black font-medium">
+                    <Link href="#" className="text-gray-900 hover:text-black font-medium transition-all duration-200 transform hover:scale-105">
                         Brands
                     </Link>
                 </nav>
@@ -406,10 +417,10 @@ const Navbar = () => {
                     ${isSearchExpanded ? 'md:ml-auto' : 'ml-2 md:ml-auto'}
                     text-gray-900
                 `}>
-                    <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full">
+                    <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full transition-all duration-200 transform hover:scale-105">
                         <ShoppingCart size={22} strokeWidth={2} />
                     </Link>
-                    <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full md:mr-[0.5rem] lg:mr-[0.8rem] xl:mr-[1rem]">
+                    <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full md:mr-[0.5rem] lg:mr-[0.8rem] xl:mr-[1rem] transition-all duration-200 transform hover:scale-105">
                         <User size={22} strokeWidth={2} />
                     </Link>
                 </div>

@@ -27,8 +27,7 @@ body {
 
 
 
-/*//////////////////////////////////*/
-
+/**/
 @media (min-width: 768px) {
   .no-scrollbar-md-up {
     scrollbar-width: none;        /* Firefox */
@@ -45,4 +44,13 @@ body {
   .review-cards {
     width: 300px;
 }
+}
+/**/
+
+
+/*//////////////////////////////////*/
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
