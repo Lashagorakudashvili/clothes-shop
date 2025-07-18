@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+//import { usePathname } from "next/navigation";
 
 
 export default function Home() {
@@ -129,7 +129,7 @@ const products: Product[] = [
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
     <Link href="/coming-soon" className="cursor-pointer">
-      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6">
+      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
         <Image
           src={product.image}
           alt={product.name}
@@ -226,7 +226,7 @@ const products2: Product2[] = [
 const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
   return (
     <Link href="/coming-soon" className="cursor-pointer">
-      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6">
+      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
         <Image
           src={product.image}
           alt={product.name}
@@ -568,7 +568,7 @@ const [email, setEmail] = useState("");
           {/* Desktop view: Grid layout */}
           <div className="hidden md:grid grid-cols-4 gap-4">
             {products.map((product) => (
-              <ProductCard key={product.id} product={product} />
+              <ProductCard  key={product.id} product={product} />
             ))}
           </div>
           {/* Desktop view: Grid layout */}
@@ -629,7 +629,7 @@ const [email, setEmail] = useState("");
       
         {/* "View all" Button below all content */}
         <div className="flex justify-center mt-8">
-          <Link href="/view-all" className="cursor-pointer text-black text-lg hover:underline">
+          <Link href="/View-all" className="cursor-pointer text-black text-lg hover:underline">
             View All
           </Link>
         </div>
@@ -708,7 +708,7 @@ const [email, setEmail] = useState("");
       
         {/* "View all" Button below all content */}
         <div className="flex justify-center mt-8">
-          <Link href="/view-all" className="cursor-pointer text-black text-lg hover:underline">
+          <Link href="/View-all" className="cursor-pointer text-black text-lg hover:underline">
             View All
           </Link>
         </div>
@@ -724,9 +724,8 @@ const [email, setEmail] = useState("");
         </span>
 
         <div className="mt-[64px] container mx-auto grid grid-cols-1 grid-rows-4 gap-4 px-4 md:grid-cols-3 md:grid-rows-2">
-          
           {/* Casual */}
-          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1">
+          <Link href="/Casual" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1 transition-all duration-200 transform hover:scale-105">
             <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Casual</span>
             <Image
               src="/casual-img.png"
@@ -738,7 +737,7 @@ const [email, setEmail] = useState("");
           </Link>
 
           {/* Formal */}
-          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1">
+          <Link href="/Formal" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1 transition-all duration-200 transform hover:scale-105">
             <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Formal</span>
             <Image
               src="/formal-img.png"
@@ -750,7 +749,7 @@ const [email, setEmail] = useState("");
           </Link>
 
           {/* Party */}
-          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1">
+          <Link href="/Party" className="relative col-span-1 row-span-1 md:col-span-2 md:row-span-1 transition-all duration-200 transform hover:scale-105">
             <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Party</span>
             <Image
               src="/party-img.png"
@@ -762,7 +761,7 @@ const [email, setEmail] = useState("");
           </Link>
 
           {/* Gym */}
-          <Link href="#" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1">
+          <Link href="/Gym" className="relative col-span-1 row-span-1 md:col-span-1 md:row-span-1 transition-all duration-200 transform hover:scale-105">
             <span className="absolute top-4 left-4 text-black text-xl text-[36px] font-bold z-10">Gym</span>
             <Image
               src="/gym-img.png"
@@ -792,7 +791,7 @@ const [email, setEmail] = useState("");
                 {/* left arrow */}
                 <button
                   onClick={() => scrollCarousel(carouselRef3, -1)}
-                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow"
+                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow transition-all duration-200 transform hover:scale-110"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -803,7 +802,7 @@ const [email, setEmail] = useState("");
                 {/* right arrow */}
                 <button
                   onClick={() => scrollCarousel(carouselRef3, 1)}
-                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow"
+                  className="hover:cursor-pointer p-2 bg-white rounded-full shadow transition-all duration-200 transform hover:scale-110"
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-black" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -867,7 +866,7 @@ const [email, setEmail] = useState("");
                 </div>
                 <button
                     type="submit"
-                    className="hover:cursor-pointer w-full md:w-[250px] lg:w-[349px] md:text-[15px] lg:text-[16px] h-[50px] bg-white text-black font-semibold rounded-3xl px-8 py-4 hover:bg-gray-100 transition border border-black flex items-center justify-center">
+                    className="hover:cursor-pointer w-full md:w-[250px] lg:w-[349px] md:text-[15px] lg:text-[16px] h-[50px] bg-white text-black font-semibold rounded-3xl px-8 py-4 hover:bg-gray-100 border border-black flex items-center justify-center transition-all duration-200 transform hover:scale-105">
                     Subscribe to Newsletter
                 </button>
                </form>

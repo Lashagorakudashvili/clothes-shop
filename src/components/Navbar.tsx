@@ -78,7 +78,7 @@ const Navbar = () => {
     // Parse the category from URL and set it in state on component mount AND clear when on homepage
     useEffect(() => {
         // Check if the current path matches a category
-        const validCategories = ['casual', 'formal', 'party', 'gym'];
+        const validCategories = ['Casual', 'Formal', 'Party', 'Gym'];
         const currentPath = pathname.substring(1); // Remove leading slash
         
         if (validCategories.includes(currentPath)) {
@@ -277,10 +277,10 @@ const Navbar = () => {
                             <div className="py-2">
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
-                                        onClick={() => setSelectedCategory(selectedCategory === 'casual' ? '' : 'casual')} 
+                                        onClick={() => setSelectedCategory(selectedCategory === 'Casual' ? '' : 'Casual')} 
                                         className={`
                                             px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
-                                            ${selectedCategory === 'casual' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            ${selectedCategory === 'Casual' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
                                             hover:border-black
                                         `}
                                     >
@@ -454,7 +454,7 @@ const Navbar = () => {
                                     ${isShopDropdownOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}
                                 `}
                             >
-                                {['casual', 'formal', 'party', 'gym'].map((category) => (
+                                {['Casual', 'Formal', 'Party', 'Gym'].map((category) => (
                                     <div key={category} className="text-center px-8 py-2 transition-all duration-300">
                                         <button 
                                             onClick={() => setSelectedCategory(selectedCategory === category ? '' : category)}
