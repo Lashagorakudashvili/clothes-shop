@@ -128,7 +128,7 @@ const Navbar = () => {
     // Close dropdown menus when clicking outside, but with special search behavior
     
     const toggleShopDropdown = () => {
-        setIsShopDropdownOpen(!isShopDropdownOpen);
+        setIsShopDropdownOpen(prev => !prev);
     };
 
     const toggleMenu = () => {
@@ -289,10 +289,10 @@ const Navbar = () => {
                                 </div>
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
-                                        onClick={() => setSelectedCategory(selectedCategory === 'formal' ? '' : 'formal')} 
+                                        onClick={() => setSelectedCategory(selectedCategory === 'Formal' ? '' : 'Formal')} 
                                         className={`
                                             px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
-                                            ${selectedCategory === 'formal' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            ${selectedCategory === 'Formal' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
                                             hover:border-black
                                         `}
                                     >
@@ -301,10 +301,10 @@ const Navbar = () => {
                                 </div>
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
-                                        onClick={() => setSelectedCategory(selectedCategory === 'party' ? '' : 'party')} 
+                                        onClick={() => setSelectedCategory(selectedCategory === 'Party' ? '' : 'Party')} 
                                         className={`
                                             px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
-                                            ${selectedCategory === 'party' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            ${selectedCategory === 'Party' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
                                             hover:border-black
                                         `}
                                     >
@@ -313,10 +313,10 @@ const Navbar = () => {
                                 </div>
                                 <div className="px-4 py-2 hover:bg-gray-100">
                                     <button 
-                                        onClick={() => setSelectedCategory(selectedCategory === 'gym' ? '' : 'gym')} 
+                                        onClick={() => setSelectedCategory(selectedCategory === 'Gym' ? '' : 'Gym')} 
                                         className={`
                                             px-4 py-2 cursor-pointer w-full text-left border-b-2 border-transparent
-                                            ${selectedCategory === 'gym' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
+                                            ${selectedCategory === 'Gym' ? 'bg-black text-white rounded-3xl' : 'hover:bg-gray-100'}
                                             hover:border-black
                                         `}
                                     >
