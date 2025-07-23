@@ -16,7 +16,7 @@ export default function CategoryPage() {
 
 
 {/* ///////////// mobile filter ////////////// */}
-  {/* ///////////// no scroll when filters open ////////////// */}
+  {/* no scroll when filters open */}
   const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -40,19 +40,77 @@ export default function CategoryPage() {
         document.body.style.overflow = '';
       };
     }, [isFilterOpen, setIsFilterOpen]);
-  {/* ///////////// no scroll when filters open ////////////// */}
+  {/* no scroll when filters open */}
 
 
-  {/* ///////////// mobile price dropdown  ////////////// */}
+  {/* mobile price dropdown */}
   const [isPriceDropDownOpen, setisPriceDropDownOpen] = useState(false);
  
   const togglePriceDropdown = () => {
     setisPriceDropDownOpen(prev => !prev);
   }
+  {/* mobile price dropdown */}
+
+
+  {/* mobile Color dropdown */}
+  const [isColorDropDownOpen, setisColorDropDownOpen] = useState(false);
+
+    const toggleColorDropdown = () => {
+      setisColorDropDownOpen(prev => !prev);
+    }
+
+
+  const colors = [
+    { name: 'Green', bg: '#00C12B', activeBg: '#009e25', border: '#009e25', activeBorder: '#007d1d' },
+    { name: 'Red', bg: '#F50606', activeBg: '#F50606', border: '#F50606', activeBorder: '#6d0202' },
+    { name: 'Yellow', bg: '#FFD700', activeBg: '#e6c200', border: '#FFD700', activeBorder: '#bfa100' },
+    { name: 'Orange', bg: '#FFA500', activeBg: '#e69500', border: '#FFA500', activeBorder: '#b36b00' },
+    { name: 'Sky Blue', bg: '#87CEEB', activeBg: '#5bc0e7', border: '#87CEEB', activeBorder: '#309ab7' },
+    { name: 'Blue', bg: '#0000FF', activeBg: '#0000e6', border: '#0000FF', activeBorder: '#0000b3' },
+    { name: 'Purple', bg: '#800080', activeBg: '#660066', border: '#800080', activeBorder: '#4b004b' },
+    { name: 'Pink', bg: '#FFC0CB', activeBg: '#f5a5b4', border: '#FFC0CB', activeBorder: '#cc8291' },
+    { name: 'White', bg: '#FFFFFF', activeBg: '#f0f0f0', border: '#F7C8DA', activeBorder: '#F19CBB' },
+    { name: 'Black', bg: '#000000', activeBg: '#1a1a1a', border: '#000000', activeBorder: '#333333' },
+  ];
+
+  const [selectedColors, setSelectedColors] = useState<boolean[]>(Array(colors.length).fill(false));
+
+  const toggleColor = (index: number) => {
+    const updated = [...selectedColors];
+    updated[index] = !updated[index];
+    setSelectedColors(updated);
+  };
+  {/* mobile Color dropdown */}
+
+
+  {/* mobile size dropdown */}
+  const [isSizeDropDownOpen, setisSizeDropDownOpen] = useState(false);
+
+  const toggleSizeDropDown = () => {
+    setisSizeDropDownOpen(prev => !prev)
+  }
+
+
+  const sizes = [
+    'XX-Small', 'X-Small', 'Small',
+    'Medium', 'Large', 'X-Large',
+    'XX-Large', '3X-Large', '4X-Large',
+  ];
+
+  const [selectedSizes, setSelectedSizes] = useState<boolean[]>(Array(sizes.length).fill(false));
+
+  const toggleSize = (index: number) => {
+    const updated = [...selectedSizes];
+    updated[index] = !updated[index];
+    setSelectedSizes(updated);
+  };
+  {/* mobile size dropdown */}
+
+
+
+  {/* /////////////////////  ////////////////// */}
   
-
-
-  {/* ///////////// mobile price dropdown  ////////////// */}
+  {/* /////////////////////  ////////////////// */}
 
 
 
@@ -68,7 +126,7 @@ export default function CategoryPage() {
 
 
       {/* ///////////// mobile filter ////////////// */}
-      <section  id='' className="relative container md:hidden">
+      <section  className="relative container md:hidden">
         <div className="flex justify-between items-center px-[0.8rem] mt-[12px]">
           <div>
             <span className="text-black font-bold text-[24px]">{category}</span>
@@ -93,17 +151,15 @@ export default function CategoryPage() {
         {/* filter dropdown */}
         <div
           ref={panelRef}
-          className={`
-            fixed -mt-[6rem] z-40 h-screen w-full  bg-white border-l rounded-l-lg shadow-md
-            transition-transform duration-500 ease-in-out
+          className={`pb-[25px]
+            fixed -left-[18px] -right-[8px] bottom-0 top-[100px] z-40 bg-white shadow-md
+            transform transition-transform duration-500 ease-in-out
+            overflow-y-auto
             ${isFilterOpen ? 'translate-x-0' : 'translate-x-full'}
-          `}
-        >
+            `}
+          >
           <div
-            className={`
-              transition-opacity duration-300 h-full overflow-y-auto
-              ${isFilterOpen ? 'opacity-100 mr-[8px]' : 'opacity-0'}
-            `}>
+            className={`px-4 pt-4 transition-opacity duration-300 ${isFilterOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
 
             {/* X button */}
             <div className="flex justify-between items-center px-4 pt-4">
@@ -120,7 +176,7 @@ export default function CategoryPage() {
 
             {/*/////////////////// filter elements ///////////////////*/}
             <div>
-              {/* first filter elements */}
+              {/* first filter elements (clothes) */}
               <div className="flex flex-col gap-3 text-[18px] mt-[35px] px-4">
                 {['T-shirts', 'Shorts', 'Shirts', 'Hoodie', 'Jeans'].map((item) => (
                   <label key={item} className="flex justify-between items-center gap-2">
@@ -129,15 +185,15 @@ export default function CategoryPage() {
                   </label>
                 ))}
               </div>
-              {/* first filter elements */}
+              {/* first filter elements (clothes) */}
               
               
-              {/* second filter elements */}
+              {/* second filter elements (price) */}
               <div className='mt-[44px] px-[15px]'>
                 <div className='flex justify-between'> 
                   <span className='text-black text-[23px] font-bold'>Price</span>
                   <Image
-                    className={`hover:cursor-pointer transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isPriceDropDownOpen ? 'rotate-180' : ''}`}
+                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isPriceDropDownOpen ? 'rotate-180' : ''}`}
                     onClick={togglePriceDropdown}
                     src="/Arrow-Down.png"
                     alt="Arrow Down"
@@ -147,7 +203,7 @@ export default function CategoryPage() {
                 </div>
 
                 {/* price range */}
-                <div className={`px-[20px] ${isPriceDropDownOpen ? 'block' : 'hidden'}`}>
+                <div className={`mb-[70px] px-[20px] ${isPriceDropDownOpen ? 'block' : 'hidden'}`}>
                   <ReactSlider
                     className="horizontal-slider w-full h-2 rounded mt-[30px] mx-auto"
                     trackClassName="example-track bg-black rounded h-full"
@@ -169,16 +225,83 @@ export default function CategoryPage() {
                 </div>
                {/* price range */}
               </div>
-              {/* second filter elements */}
+              {/* second filter elements (price) */}
             
             
+              {/* third filter elements (colors) */}
+              <div className='mt-[20px] px-[15px]'>
+                <div className='flex justify-between'> 
+                    <span className='text-black text-[23px] font-bold'>Colors</span>
+                    <Image
+                      className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isColorDropDownOpen ? 'rotate-180' : ''}`}
+                      onClick={toggleColorDropdown}
+                      src="/Arrow-Down.png"
+                      alt="Arrow Down"
+                      width={20}
+                      height={20}
+                    />
+                </div>
 
-              {/*/////////////////// third filter elements ///////////////////*/}
-              
-              {/*/////////////////// third filter elements ///////////////////*/}
+                {/* colors */}
+                <div className={`mt-[16px] mb-[30px] flex-wrap gap-[15.5px] ${!isColorDropDownOpen ? 'hidden' : 'flex'}`}>
+                  {colors.map((color, index) => (
+                    <button
+                      key={color.name}
+                      onClick={() => toggleColor(index)}
+                      className="w-[37px] h-[37px] rounded-full border-[3px]"
+                      style={{
+                        backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
+                        borderColor: selectedColors[index] ? color.activeBorder : color.border,
+                      }}
+                    ></button>
+                  ))}
+                </div>
+                {/* colors */}
+              </div>
+              {/* third filter elements (colors) */}
 
 
+              {/* fourth filter elements (sizes) */}
+              <div className='mt-[20px] px-[15px]'>
+                <div className='flex justify-between'> 
+                  <span className='text-black text-[23px] font-bold'>Size</span>
+                  <Image
+                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isSizeDropDownOpen ? 'rotate-180' : ''}`}
+                    onClick={toggleSizeDropDown}
+                    src="/Arrow-Down.png"
+                    alt="Arrow Down"
+                    width={20}
+                    height={20}
+                  />
+                </div>
+
+                {/* sizes */}
+                <div className={`mt-[16px] grid-cols-3 gap-[8px] ${!isSizeDropDownOpen ? 'hidden' : 'grid'}`}>
+                  {sizes.map((size, index) => (
+                    <button
+                      key={size}
+                      onClick={() => toggleSize(index)}
+                      className={`p-[15px] rounded-full text-sm font-medium transition-colors
+                        ${selectedSizes[index] ? 'bg-black text-white' : 'bg-white text-black'}`}
+                    >
+                      {size}
+                    </button>
+                  ))}
+                </div>
+                {/* sizes */}
+              </div>
+              {/* fourth filter elements (sizes) */}
             
+
+
+              {/* //////////////////////  //////////////////// */}
+              <div>
+                  
+              </div>
+              {/* //////////////////////  //////////////////// */}
+
+
+
             </div>
             {/*/////////////////// filter elements ///////////////////*/}
           
