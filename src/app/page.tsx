@@ -391,11 +391,6 @@ const Cards: React.FC = () => {
 // logic for section 5 (user reviews) //
 
 
-/* FOR SECTION 6 EMAIL SUB*/
-const [email, setEmail] = useState("");
-/* FOR SECTION 6 EMAIL SUB*/
-
-  
 
   return (
     <main className="flex flex-col min-h-screen font-sans">
@@ -821,60 +816,6 @@ const [email, setEmail] = useState("");
           </div>
         </section>
       {/* Section 5 user reviews */}
-
-
-      {/* section 6 (email subs) */}
-        <section className="container mx-auto pt-[50px] pl-[1rem] pr-[1rem]">
-          <div className="bg-black rounded-3xl flex flex-col md:flex-row md:items-center md:justify-between">
-            {/* Text */}
-              <div className="text-[30px] md:text-[30px] lg:text-[40px] font-extrabold pt-[25px] pb-[5px] pl-[20px] pr-[30px]  md:pt-[43px] md:pb-[43px] md:pl-[64px] md:pr-[0px] text-center md:text-left md:w-1/2">
-                STAY UP TO DATE ABOUT OUR LATEST OFFERS
-              </div>
-            {/* Text */}
-            {/* Form */}
-              <div className="w-full md:w-1/2 flex justify-center md:justify-end  pb-[20px] pl-[24px] pr-[23px]  md:pt-[36px] md:pb-[36px] md:pr-[64px]">
-                <form
-                  className="w-full md:w-[90%] bg-transparent rounded-3xl flex flex-col items-center md:items-end gap-4 p-4 md:p-2 shadow"
-                  onSubmit={(e) => {
-                  e.preventDefault();
-                  if (email.trim()) {
-                    console.log("Submitted email:", email);
-                          // Clear the field
-                          setEmail("");
-                      }
-                    }
-                  }
-                >
-                <div className="relative w-full md:w-[250px] lg:w-[349px]">
-                  <Image
-                    src="/Email-img.png"
-                    alt="Email"
-                    width={24}
-                    height={24}
-                    className="absolute left-4 top-1/2 -translate-y-1/2"
-                  />
-                  <input
-                    type="email"
-                    placeholder="Enter your email address"
-                    required
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full h-[50px] rounded-3xl pl-12 pr-6 py-4 text-black text-lg outline-none focus:ring-2 focus:ring-gray-400 bg-white"
-                    aria-label="Email address"
-                    autoComplete="email"
-                  />
-                </div>
-                <button
-                    type="submit"
-                    className="hover:cursor-pointer w-full md:w-[250px] lg:w-[349px] md:text-[15px] lg:text-[16px] h-[50px] bg-white text-black font-semibold rounded-3xl px-8 py-4 hover:bg-gray-100 border border-black flex items-center justify-center transition-all duration-200 transform hover:scale-105">
-                    Subscribe to Newsletter
-                </button>
-               </form>
-              </div>
-            {/* Form */}
-          </div>
-        </section>
-      {/* section 6 (email subs) */}
     </main>
   );
 }

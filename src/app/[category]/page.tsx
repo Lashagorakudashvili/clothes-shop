@@ -8,6 +8,7 @@ import Image from "next/image";
 import ReactSlider from 'react-slider';
 
 
+
 export default function CategoryPage() {
   const path = usePathname(); // e.g., "/casual"
   const category = path.split("/")[1]; // "casual"
@@ -15,7 +16,7 @@ export default function CategoryPage() {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
 
-{/* ///////////// mobile filter ////////////// */}
+{/* mobile filter */}
   {/* no scroll when filters open */}
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -61,7 +62,7 @@ export default function CategoryPage() {
 
 
   const colors = [
-    { name: 'Green', bg: '#00C12B', activeBg: '#009e25', border: '#009e25', activeBorder: '#007d1d' },
+    { name: 'Green', bg: '#00C12B', activeBg: '#009e25', border: '#00C12B', activeBorder: '#007d1d' },
     { name: 'Red', bg: '#F50606', activeBg: '#F50606', border: '#F50606', activeBorder: '#6d0202' },
     { name: 'Yellow', bg: '#FFD700', activeBg: '#e6c200', border: '#FFD700', activeBorder: '#bfa100' },
     { name: 'Orange', bg: '#FFA500', activeBg: '#e69500', border: '#FFA500', activeBorder: '#b36b00' },
@@ -107,14 +108,135 @@ export default function CategoryPage() {
   {/* mobile size dropdown */}
 
 
+  {/* mobile dress styles */}
+  const [isDressStyleOpen, setisDressStyleOpen] = useState(false);
 
-  {/* /////////////////////  ////////////////// */}
-  
-  {/* /////////////////////  ////////////////// */}
+  const toggleDressStyleOpen = () => {
+    setisDressStyleOpen(prev => !prev)
+  }
+  {/* mobile dress styles */}
+{/* mobile filter */}
 
 
 
-{/* ///////////// mobile filter ////////////// */}
+{/*///////////////////////////// mobile clothes /////////////////////////////*/}
+interface Product {
+  id: number;
+  name: string;
+  image: string;
+  price: number;
+  originalPrice?: number;
+  discount?: string;
+  // Star rating image filename
+  stars: "3-stars.png" | "3-5-stars.png" | "4-stars.png" | "4-5-stars.png" | "5-stars.png";
+}
+
+
+const products: Product[] = [
+  {
+    id: 1,
+    name: "T-shirt with Tape Details",
+    image: "/black-t.png",
+    price: 120,
+    stars: "4-5-stars.png",
+  },
+  {
+    id: 2,
+    name: "Skinny Fit Jeans",
+    image: "/blue-jeans.png",
+    price: 240,
+    originalPrice: 260,
+    discount: "20%",
+    stars: "3-5-stars.png",
+  },
+  {
+    id: 3,
+    name: "Checkered Shirt",
+    image: "/b-r-b-u.png",
+    price: 180,
+    stars: "4-5-stars.png",
+  },
+  {
+    id: 4,
+    name: "Sleeve Striped T-shirt",
+    image: "/o-b-t.png",
+    price: 130,
+    originalPrice: 160,
+    discount: "30%",
+    stars: "4-5-stars.png",
+  },
+  {
+    id: 5,
+    name: "Vertical Striped Shirt",
+    image: "/green-b-up.png",
+    price: 212,
+    originalPrice: 232,
+    discount: "20%",
+    stars: "5-stars.png",
+  },
+  {
+    id: 6,
+    name: "Courage Graphic T-Shirt",
+    image: "/orange-t.png",
+    price: 145,
+    stars: "4-stars.png",
+  },
+];
+
+
+const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
+  <Link href="/coming-soon" className="cursor-pointer">
+    <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md px-[15px]">
+      <Image
+        src={product.image}
+        alt={product.name}
+        width={295}
+        height={298}
+        className="object-cover mb-4"
+      />
+      <h2 className="text-[15px] md:text-[16.5px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">
+        {product.name}
+      </h2>
+      <div className="mb-2 w-full flex justify-start">
+        <Image
+          src={`/${product.stars}`}
+          alt="rating"
+          width={104}
+          height={18}
+          className="object-contain md:w-[70px] lg:w-[104px]"
+        />
+        {product.stars === "4-5-stars.png" ? (
+          <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] md:mt-[0px] ml-[13px] text-black">4.5/5</span>
+        ) : (
+          <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[3.5px] md:mt-[0px] ml-[13px] text-black">3.5/5</span>
+        )}
+      </div>
+      <div className="flex items-center w-full mb-2">
+        <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black text-left">
+          ${product.price}
+        </div>
+        {product.originalPrice && (
+          <div
+            className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto"
+            style={{ marginLeft: "10px" }}
+          >
+            ${product.originalPrice}
+          </div>
+        )}
+        {product.discount && (
+          <div
+            className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500"
+            style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}
+          >
+            {product.discount}
+          </div>
+        )}
+      </div>
+    </div>
+  </Link>
+);
+{/*///////////////////////////// mobile clothes /////////////////////////////*/}
+
 
 
   return (
@@ -124,8 +246,7 @@ export default function CategoryPage() {
       </p>
 
 
-
-      {/* ///////////// mobile filter ////////////// */}
+      {/*  mobile page */}
       <section  className="relative container md:hidden">
         <div className="flex justify-between items-center px-[0.8rem] mt-[12px]">
           <div>
@@ -174,7 +295,7 @@ export default function CategoryPage() {
             {/* X button */}
             
 
-            {/*/////////////////// filter elements ///////////////////*/}
+            {/* filter elements */}
             <div>
               {/* first filter elements (clothes) */}
               <div className="flex flex-col gap-3 text-[18px] mt-[35px] px-4">
@@ -293,27 +414,73 @@ export default function CategoryPage() {
               {/* fourth filter elements (sizes) */}
             
 
+              {/* fifth element (dress styles) */}
+              <div className={`mt-[20px] px-[15px] ${isDressStyleOpen ? 'mb-[80px]' : 'mb-[240px]'}`}>
+                <div className='flex justify-between'> 
+                  <span className='text-black text-[23px] font-bold'>Dress Style</span>
+                  <Image
+                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px] ${isDressStyleOpen ? 'rotate-180' : ''}`}
+                    onClick={toggleDressStyleOpen}
+                    src="/Arrow-Down.png"
+                    alt="Arrow Down"
+                    width={20}
+                    height={20}
+                  />
+                </div>
 
-              {/* //////////////////////  //////////////////// */}
-              <div>
-                  
+                {/* dress styles */}
+                <div className={`flex-col gap-3 text-[18px] mt-[16px] ${!isDressStyleOpen ? 'hidden' : 'flex'}`}>
+                  {['Casual', 'Formal', 'Party', 'Gym'].map((item) => (
+                    <label key={item} className="flex justify-between items-center gap-2">
+                      <span className="text-gray-600">{item}</span>
+                      <input type="checkbox" className="accent-black mr-[3px]" />
+                    </label>
+                  ))}
+                </div>
+                {/* dress styles */}
               </div>
-              {/* //////////////////////  //////////////////// */}
+              {/* fifth element (dress styles) */}
 
 
-
+              {/* sixth element (apply button) */}
+              <div className='mt-[20px] px-[15px]'>
+                  <button className='bg-black w-full h-[48px] rounded-full'
+                  onClick={() => setIsFilterOpen(false)}
+                  >
+                    Apply Filter
+                  </button>
+              </div>
+              {/* sixth element (apply button) */}
             </div>
-            {/*/////////////////// filter elements ///////////////////*/}
-          
-          
+            {/* filter elements */}
           </div>
         </div>
         {/* filter dropdown */}
+
+            
+
+        {/* ////////////////////////// mobile clothes //////////////////////// */}
+        <section>
+         <div className="mt-[36px] grid grid-cols-2 gap-[10px] justify-items-center">
+            {products.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </section>
+        {/* ////////////////////////// mobile clothes //////////////////////// */}
+
+
+
       </section>
-      {/* ///////////// mobile filter ////////////// */}
-    
-    
-    
+      {/* ///////////// mobile page ////////////// */}
+
+
+
+      {/* ///////////// pc page ////////////// */}
+      
+      {/* ///////////// pc page ////////////// */}
+
+
     </main>
   );
 }
