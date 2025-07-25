@@ -3,9 +3,10 @@
 
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import ReactSlider from 'react-slider';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 
 
@@ -91,7 +92,6 @@ export default function CategoryPage() {
     setisSizeDropDownOpen(prev => !prev)
   }
 
-
   const sizes = [
     'XX-Small', 'X-Small', 'Small',
     'Medium', 'Large', 'X-Large',
@@ -118,8 +118,7 @@ export default function CategoryPage() {
 {/* mobile filter */}
 
 
-
-{/*///////////////////////////// mobile clothes /////////////////////////////*/}
+{/* mobile clothes */}
 interface Product {
   id: number;
   name: string;
@@ -130,7 +129,6 @@ interface Product {
   // Star rating image filename
   stars: "3-stars.png" | "3-5-stars.png" | "4-stars.png" | "4-5-stars.png" | "5-stars.png";
 }
-
 
 const products: Product[] = [
   {
@@ -183,10 +181,9 @@ const products: Product[] = [
   },
 ];
 
-
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
   <Link href="/coming-soon" className="cursor-pointer">
-    <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md px-[15px]">
+    <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md px-[15px] h-[300px]">
       <Image
         src={product.image}
         alt={product.name}
@@ -235,7 +232,90 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
     </div>
   </Link>
 );
-{/*///////////////////////////// mobile clothes /////////////////////////////*/}
+
+
+{/* mobile clothes paginator */}
+const [currentPage, setCurrentPage] = useState(1);
+const totalPages = 3;
+
+// Fisher-Yates shuffle algorithm
+const shuffleArray = (array: Product[], seed: number) => {
+  const shuffled = [...array];
+  let random = () => {
+    const x = Math.sin(seed++) * 10000;
+    return x - Math.floor(x);
+  };
+  
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  return shuffled;
+};
+
+// Shuffle products based on current page (using page as seed for consistent shuffling)
+const shuffledProducts = useMemo(() => {
+  return shuffleArray(products, currentPage * 1000);
+}, [currentPage]);
+
+const handlePageChange = (page: number) => {
+  if (page >= 1 && page <= totalPages) {
+    setCurrentPage(page);
+  }
+};
+
+const Paginator: React.FC<{
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}> = ({ currentPage, totalPages, onPageChange }) => {
+  return (
+    <div className="flex items-center justify-center mt-[44px] mb-[50px] space-x-2">
+      {/* Previous Button */}
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={`p-2 rounded-lg border ${
+          currentPage === 1
+            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+            : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+        }`}
+      >
+        <ChevronLeft size={20} />
+      </button>
+
+      {/* Page Numbers */}
+      {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
+        <button
+          key={pageNum}
+          onClick={() => onPageChange(pageNum)}
+          className={`px-4 py-2 rounded-lg ${
+            currentPage === pageNum
+              ? 'bg-black text-white'
+              : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
+          }`}
+        >
+          {pageNum}
+        </button>
+      ))}
+
+      {/* Next Button */}
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={`p-2 rounded-lg border ${
+          currentPage === totalPages
+            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
+            : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+        }`}
+      >
+        <ChevronRight size={20} />
+      </button>
+    </div>
+  );
+};
+{/* mobile clothes paginator */}
+{/* mobile clothes */}
 
 
 
@@ -458,21 +538,25 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
         {/* filter dropdown */}
 
             
-
-        {/* ////////////////////////// mobile clothes //////////////////////// */}
+        {/* mobile clothes */}
         <section>
          <div className="mt-[36px] grid grid-cols-2 gap-[10px] justify-items-center">
-            {products.map((product) => (
+            {shuffledProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
+
+        {/* mobile clothes paginator */}
+        <Paginator
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+        {/* mobile clothes paginator */}
         </section>
-        {/* ////////////////////////// mobile clothes //////////////////////// */}
-
-
-
+        {/* mobile clothes */}
       </section>
-      {/* ///////////// mobile page ////////////// */}
+      {/* mobile page */}
 
 
 

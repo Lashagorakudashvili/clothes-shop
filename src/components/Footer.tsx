@@ -67,10 +67,10 @@ const Footer = () => {
                 {/* logo and soc icons */}
                 <div className='flex flex-col md:w-1/3'>
                     <span className='text-[40px] font-extrabold text-black'>SHOP.CO</span>
-                    <span className='text-[14px] text-gray-600 pt-[25px] max-w-full pr-[1rem] md:pr-[0px] md:max-w-[248px] leading-[22px]'>
+                    <span className='text-[14px] text-gray-600 max-w-full pr-[1rem] md:pr-[0px] md:max-w-[248px] leading-[22px]'>
                         We have clothes that suits your style and which you’re proud to wear. From women to men.
                     </span>
-                    <div className="flex gap-4 pt-[35px]">
+                    <div className="flex gap-4 pt-[30px]">
                         <a
                         href="https://twitter.com"
                         target="_blank"
@@ -112,7 +112,7 @@ const Footer = () => {
                 {/* logo and soc icons */}
                 {/* about company */}
                 <div className='text-black md:w-2/3'>
-                    <div className="mt-[17px] grid grid-cols-2 md:grid-cols-4 gap-[10px] lg:gap-10 xl:gap-25">
+                    <div className="mt-[0px] grid grid-cols-2 md:grid-cols-4 gap-[10px] lg:gap-10 xl:gap-25">
                         <div>
                             <h2 className="font-bold mb-2">COMPANY</h2>
                             <div className="flex flex-col gap-5 mt-[20px] text-gray-600">

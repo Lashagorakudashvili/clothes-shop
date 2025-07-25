@@ -208,7 +208,7 @@ const Navbar = () => {
 
     
     return (
-        <header ref={navbarRef} className="fixed w-full z-50 bg-white mt-[39px] md:mt-[38px] font-sans shadow-sm py-4">
+        <header ref={navbarRef} className="fixed w-full z-50 bg-white mt-[38px] md:mt-[38px] font-sans shadow-sm py-4">
             <div className="flex items-center justify-between">
                 {/* Mobile menu button */}
                 <button
