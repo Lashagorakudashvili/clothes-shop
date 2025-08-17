@@ -9,15 +9,13 @@ import ReactSlider from 'react-slider';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 
-
 export default function CategoryPage() {
   const path = usePathname(); // e.g., "/casual"
   const category = path.split("/")[1]; // "casual"
 
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
-
-{/* mobile filter */}
+{/* mobile/pc filter */}
   {/* no scroll when filters open */}
   const panelRef = useRef<HTMLDivElement>(null);
 
@@ -43,23 +41,20 @@ export default function CategoryPage() {
     }, [isFilterOpen, setIsFilterOpen]);
   {/* no scroll when filters open */}
 
-
-  {/* mobile price dropdown */}
+  {/* mobile/pc price dropdown */}
   const [isPriceDropDownOpen, setisPriceDropDownOpen] = useState(false);
  
   const togglePriceDropdown = () => {
     setisPriceDropDownOpen(prev => !prev);
   }
-  {/* mobile price dropdown */}
+  {/* mobile/pc price dropdown */}
 
-
-  {/* mobile Color dropdown */}
+  {/* mobile/pc Color dropdown */}
   const [isColorDropDownOpen, setisColorDropDownOpen] = useState(false);
 
     const toggleColorDropdown = () => {
       setisColorDropDownOpen(prev => !prev);
     }
-
 
   const colors = [
     { name: 'Green', bg: '#00C12B', activeBg: '#009e25', border: '#00C12B', activeBorder: '#007d1d' },
@@ -81,10 +76,9 @@ export default function CategoryPage() {
     updated[index] = !updated[index];
     setSelectedColors(updated);
   };
-  {/* mobile Color dropdown */}
+  {/* mobile/pc Color dropdown */}
 
-
-  {/* mobile size dropdown */}
+  {/* mobile/pc size dropdown */}
   const [isSizeDropDownOpen, setisSizeDropDownOpen] = useState(false);
 
   const toggleSizeDropDown = () => {
@@ -104,20 +98,20 @@ export default function CategoryPage() {
     updated[index] = !updated[index];
     setSelectedSizes(updated);
   };
-  {/* mobile size dropdown */}
+  {/* mobile/pc size dropdown */}
 
-
-  {/* mobile dress styles */}
+  {/* mobile/pc dress styles */}
   const [isDressStyleOpen, setisDressStyleOpen] = useState(false);
 
   const toggleDressStyleOpen = () => {
     setisDressStyleOpen(prev => !prev)
   }
-  {/* mobile dress styles */}
-{/* mobile filter */}
+  {/* mobile/pc dress styles */}
+
+{/* mobile/pc filter */}
 
 
-{/* mobile clothes */}
+{/* mobile/pc clothes */}
 interface Product {
   id: number;
   name: string;
@@ -233,7 +227,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
 );
 
 
-{/* mobile clothes paginator */}
+{/* mobile/pc clothes paginator */}
 const [currentPage, setCurrentPage] = useState(1);
 const totalPages = 3;
 
@@ -270,25 +264,27 @@ const Paginator: React.FC<{
 }> = ({ currentPage, totalPages, onPageChange }) => {
   return (
     <div className="flex items-center justify-center mt-[44px] mb-[50px] space-x-2">
+      
       {/* Previous Button */}
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
         className={`p-2 rounded-lg border ${
           currentPage === 1
-            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+            ? 'border-gray-300 text-gray-400'
+            : 'border-gray-300 text-gray-600 hover:cursor-pointer'
         }`}
       >
         <ChevronLeft size={20} />
       </button>
+      {/* Previous Button */}
 
       {/* Page Numbers */}
       {Array.from({ length: totalPages }, (_, i) => i + 1).map((pageNum) => (
         <button
           key={pageNum}
           onClick={() => onPageChange(pageNum)}
-          className={`px-4 py-2 rounded-lg ${
+          className={`hover:cursor-pointer px-4 py-2 rounded-lg ${
             currentPage === pageNum
               ? 'bg-black text-white'
               : 'border border-gray-300 text-gray-600 hover:bg-gray-50'
@@ -297,6 +293,7 @@ const Paginator: React.FC<{
           {pageNum}
         </button>
       ))}
+      {/* Page Numbers */}
 
       {/* Next Button */}
       <button
@@ -304,17 +301,19 @@ const Paginator: React.FC<{
         disabled={currentPage === totalPages}
         className={`p-2 rounded-lg border ${
           currentPage === totalPages
-            ? 'border-gray-300 text-gray-400 cursor-not-allowed'
-            : 'border-gray-300 text-gray-600 hover:bg-gray-50'
+            ? 'border-gray-300 text-gray-400'
+            : 'border-gray-300 text-gray-600 hover:cursor-pointer'
         }`}
       >
         <ChevronRight size={20} />
       </button>
+      {/* Next Button */}
+
     </div>
   );
 };
-{/* mobile clothes paginator */}
-{/* mobile clothes */}
+{/* mobile/pc clothes paginator */}
+{/* mobile/pc clothes */}
 
 
 
@@ -346,6 +345,7 @@ const Paginator: React.FC<{
             />
           </button>
           {/* filter button */}
+
         </div>
 
         {/* filter dropdown */}
@@ -373,9 +373,9 @@ const Paginator: React.FC<{
             </div>
             {/* X button */}
             
-
             {/* filter elements */}
             <div>
+
               {/* first filter elements (clothes) */}
               <div className="flex flex-col gap-3 text-[18px] mt-[35px] px-4">
                 {['T-shirts', 'Shorts', 'Shirts', 'Hoodie', 'Jeans'].map((item) => (
@@ -386,7 +386,6 @@ const Paginator: React.FC<{
                 ))}
               </div>
               {/* first filter elements (clothes) */}
-              
               
               {/* second filter elements (price) */}
               <div className='mt-[44px] px-[15px]'>
@@ -424,9 +423,9 @@ const Paginator: React.FC<{
                   />
                 </div>
                {/* price range */}
+
               </div>
               {/* second filter elements (price) */}
-            
             
               {/* third filter elements (colors) */}
               <div className='mt-[20px] px-[15px]'>
@@ -457,9 +456,9 @@ const Paginator: React.FC<{
                   ))}
                 </div>
                 {/* colors */}
+
               </div>
               {/* third filter elements (colors) */}
-
 
               {/* fourth filter elements (sizes) */}
               <div className='mt-[20px] px-[15px]'>
@@ -489,10 +488,10 @@ const Paginator: React.FC<{
                   ))}
                 </div>
                 {/* sizes */}
+
               </div>
               {/* fourth filter elements (sizes) */}
             
-
               {/* fifth element (dress styles) */}
               <div className={`mt-[20px] px-[15px] ${isDressStyleOpen ? 'mb-[80px]' : 'mb-[240px]'}`}>
                 <div className='flex justify-between'> 
@@ -517,9 +516,9 @@ const Paginator: React.FC<{
                   ))}
                 </div>
                 {/* dress styles */}
+
               </div>
               {/* fifth element (dress styles) */}
-
 
               {/* sixth element (apply button) */}
               <div className='mt-[20px] px-[15px]'>
@@ -530,13 +529,15 @@ const Paginator: React.FC<{
                   </button>
               </div>
               {/* sixth element (apply button) */}
+
             </div>
             {/* filter elements */}
+
           </div>
         </div>
         {/* filter dropdown */}
 
-            
+  
         {/* mobile clothes */}
         <section>
          <div className="mt-[36px] grid grid-cols-2 gap-[10px] justify-items-center">
@@ -552,18 +553,21 @@ const Paginator: React.FC<{
           onPageChange={handlePageChange}
         />
         {/* mobile clothes paginator */}
+
         </section>
         {/* mobile clothes */}
+
       </section>
       {/* mobile page */}
 
 
 
-      {/* ///////////// pc page ////////////// */}
+      {/* pc page */}
       <section className="hidden md:flex mt-[50px] md:mb-[10rem] lg:mb-[8rem] xl:mb-[5rem]">
         
         {/* Left: Filters */}
         <section className="md:w-[230px] lg:w-[320px] xl:w-[380] max-h-[1220px]">
+
             {/* pc filter elements */}
             <div className="md:ml-[13px] lg:ml-[4rem] xl:ml-[100px]">
               <div className="flex justify-between">
@@ -576,12 +580,13 @@ const Paginator: React.FC<{
                   className="w-[40px] h-[40px] mr-[5px]"
                     />
               </div>
+
               {/* first filter elements (clothes) */}
               <div className="flex flex-col gap-3 text-[18px] mt-[35px] px-4">
                 {['T-shirts', 'Shorts', 'Shirts', 'Hoodie', 'Jeans'].map((item) => (
                 <label key={item} className="flex justify-between items-center gap-2">
-                  <span className="text-gray-600">{item}</span>
-                  <input type="checkbox" className="accent-black mr-[3px]" />
+                  <span className="hover:cursor-pointer text-gray-600">{item}</span>
+                  <input type="checkbox" className="hover:cursor-pointer accent-black mr-[3px]" />
                 </label>
                 ))}
               </div>
@@ -592,7 +597,7 @@ const Paginator: React.FC<{
                 <div className="flex justify-between">
                   <span className="text-black text-[23px] font-bold">Price</span>
                   <Image
-                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isPriceDropDownOpen ? 'rotate-180' : ''}`}
+                    className={`transition-all duration-100 transform hover:scale-105 hover:cursor-pointer h-[20px] w-[20px] mt-[9px]  ${isPriceDropDownOpen ? 'rotate-180' : ''}`}
                     onClick={togglePriceDropdown}
                     src="/Arrow-Down.png"
                     alt="Arrow Down"
@@ -600,6 +605,7 @@ const Paginator: React.FC<{
                     height={20}
                   />
                 </div>
+
                 {/* price range */}
                 <div className={`mb-[70px] px-[20px] ${isPriceDropDownOpen ? 'block' : 'hidden'}`}>
                   <ReactSlider
@@ -622,6 +628,7 @@ const Paginator: React.FC<{
                   />
                 </div>
                 {/* price range */}
+
               </div>
               {/* second filter elements (price) */}
               
@@ -630,7 +637,7 @@ const Paginator: React.FC<{
                 <div className="flex justify-between">
                   <span className="text-black text-[23px] font-bold">Colors</span>
                     <Image
-                      className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isColorDropDownOpen ? 'rotate-180' : ''}`}
+                      className={`transition-all duration-100 transform hover:scale-105 hover:cursor-pointer h-[20px] w-[20px] mt-[9px]  ${isColorDropDownOpen ? 'rotate-180' : ''}`}
                       onClick={toggleColorDropdown}
                       src="/Arrow-Down.png"
                       alt="Arrow Down"
@@ -638,13 +645,14 @@ const Paginator: React.FC<{
                       height={20}
                     />
                   </div>
+
                 {/* colors */}
                 <div className={`mt-[16px] mb-[30px] flex-wrap gap-[15.5px] ${!isColorDropDownOpen ? 'hidden' : 'flex'}`}>
                   {colors.map((color, index) => (
                     <button
                         key={color.name}
                         onClick={() => toggleColor(index)}
-                        className="w-[37px] h-[37px] rounded-full border-[3px]"
+                        className="hover:cursor-pointer w-[37px] h-[37px] rounded-full border-[3px]"
                         style={{
                       backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
                       borderColor: selectedColors[index] ? color.activeBorder : color.border,
@@ -654,6 +662,7 @@ const Paginator: React.FC<{
                   ))}
                 </div>
                 {/* colors */}
+                
               </div>
               {/* third filter elements (colors) */}
               
@@ -662,7 +671,7 @@ const Paginator: React.FC<{
                 <div className="flex justify-between">
                   <span className="text-black text-[23px] font-bold">Size</span>
                   <Image
-                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px]  ${isSizeDropDownOpen ? 'rotate-180' : ''}`}
+                    className={`transition-all duration-100 transform hover:scale-105 hover:cursor-pointer h-[20px] w-[20px] mt-[9px]  ${isSizeDropDownOpen ? 'rotate-180' : ''}`}
                     onClick={toggleSizeDropDown}
                     src="/Arrow-Down.png"
                     alt="Arrow Down"
@@ -670,13 +679,14 @@ const Paginator: React.FC<{
                     height={20}
                   />
                 </div>
+
                 {/* sizes */}
                 <div className={`mt-[16px] grid-cols-3 gap-[8px] ${!isSizeDropDownOpen ? 'hidden' : 'grid'}`}>
                   {sizes.map((size, index) => (
                     <button
                       key={size}
                       onClick={() => toggleSize(index)}
-                      className={`p-[15px] rounded-full text-[13px] font-medium transition-colors
+                      className={`hover:cursor-pointer p-[15px] rounded-full text-[13px] font-medium transition-colors
                     ${selectedSizes[index] ? 'bg-black text-white' : 'bg-white text-black'}`}
                     >
                       {size}
@@ -684,6 +694,7 @@ const Paginator: React.FC<{
                   ))}
                 </div>
                 {/* sizes */}
+
               </div>
               {/* fourth filter elements (sizes) */}
 
@@ -692,7 +703,7 @@ const Paginator: React.FC<{
                 <div className="flex justify-between">
                   <span className="text-black text-[23px] font-bold">Dress Style</span>
                   <Image
-                    className={`transition-transform duration-100 h-[20px] w-[20px] mt-[9px] ${isDressStyleOpen ? 'rotate-180' : ''}`}
+                    className={`transition-all duration-100 transform hover:scale-105 hover:cursor-pointer h-[20px] w-[20px] mt-[9px] ${isDressStyleOpen ? 'rotate-180' : ''}`}
                     onClick={toggleDressStyleOpen}
                     src="/Arrow-Down.png"
                     alt="Arrow Down"
@@ -700,23 +711,25 @@ const Paginator: React.FC<{
                     height={20}
                   />
                 </div>
+
                 {/* dress styles */}
                 <div className={`flex-col gap-3 text-[18px] mt-[16px] ${!isDressStyleOpen ? 'hidden' : 'flex'}`}>
                   {['Casual', 'Formal', 'Party', 'Gym'].map((item) => (
                     <label key={item} className="flex justify-between items-center gap-2">
-                      <span className="text-gray-600">{item}</span>
-                      <input type="checkbox" className="accent-black mr-[3px]" />
+                      <span className="hover:cursor-pointer text-gray-600">{item}</span>
+                      <input type="checkbox" className="hover:cursor-pointer accent-black mr-[3px]" />
                     </label>
                   ))}
                 </div>
                 {/* dress styles */}
+
               </div>
               {/* fifth element (dress styles) */}
               
               {/* sixth element (apply button) */}
               <div className="mt-[20px] px-[15px]">
                 <button
-                  className="bg-black w-full h-[48px] rounded-full"
+                  className="bg-black w-full h-[48px] rounded-full transition-all duration-200 transform hover:scale-105 hover:cursor-pointer"
                   onClick={() => setIsFilterOpen(false)}
                     >
                   Apply Filter
@@ -731,9 +744,7 @@ const Paginator: React.FC<{
         {/* Left: Filters */}
         
         
-
-        
-        {/*////////////// Right: Content //////////////*/}
+        {/* Right: Content */}
         <section className="flex-1 ml-[20px] -mt-[5px]">
           
           <div className='flex justify-between'>
@@ -741,7 +752,7 @@ const Paginator: React.FC<{
             <span className='text-gray-500 text-[16px] md:mr-[35px] lg:mr-[100px] xl:mr-[140px] mt-[17px]'>Showing 1-10 of 100 Products</span>
           </div>
 
-          {/* ///////////// pc clothes ////////////// */}
+          {/* pc clothes */}
           <div>
             <div className="md:mr-[20px] lg:mr-[80px] xl:mr-[120px] mt-[36px] grid md:grid-cols-2 lg:grid-cols-3 gap-y-[50px] justify-items-center">
               {shuffledProducts.map((product) => (
@@ -757,17 +768,13 @@ const Paginator: React.FC<{
             />
             {/* pc clothes paginator */}
           </div>
-          {/* ///////////// pc clothes ////////////// */}
+          {/* pc clothes */}
 
         </section>
-        {/*////////////// Right: Content //////////////*/}
+        {/* Right: Content */}
 
-      
-      
       </section>
-      {/* ///////////// pc page ////////////// */}
-
-
+      {/* pc page */}
 
     </main>
   );
