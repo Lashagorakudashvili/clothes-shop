@@ -128,7 +128,7 @@ const products: Product[] = [
 // ProductCard: now fully clickable via wrapping it inside a Link.
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   return (
-    <Link href="/coming-soon" className="cursor-pointer">
+    <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, '-')}`} className="cursor-pointer">
       <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
         <Image
           src={product.image}
@@ -225,7 +225,7 @@ const products2: Product2[] = [
 // ProductCard2: now fully clickable via wrapping it inside a Link.
 const ProductCard2: React.FC<{ product: Product2 }> = ({ product }) => {
   return (
-    <Link href="/coming-soon" className="cursor-pointer">
+    <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, '-')}`} className="cursor-pointer">
       <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
         <Image
           src={product.image}

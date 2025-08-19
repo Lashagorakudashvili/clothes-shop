@@ -175,7 +175,7 @@ const products: Product[] = [
 ];
 
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
-  <Link href="/coming-soon" className="cursor-pointer">
+  <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, '-')}`} className="cursor-pointer">
     <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md px-[15px] h-full md:transition-transform duration-200 hover:scale-105">
       <Image
         src={product.image}
