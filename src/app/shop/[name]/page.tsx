@@ -78,6 +78,55 @@ export default function ClothePage() {
       }
     }
     /* product add and remove */
+
+
+
+
+
+    const cardsData = [
+      {
+        imgSrc: "/5-stars.png",
+        name: "Sarah M.",
+        chkMrk: "/green-check-mark.png",
+        text: "I'm blown away by the quality and style of the clothes I received from Shop.co. From casual wear to elegant dresses, every piece I've bought has exceeded my expectations.",
+        date: "Posted on August 14, 2020",
+      },
+      {
+        imgSrc: "/5-stars.png",
+        name: "Alex K.",
+        chkMrk: "/green-check-mark.png",
+        text: "Finding clothes that align with my personal style used to be a challenge until I discovered Shop.co. The range of options they offer is truly remarkable, catering to a variety of tastes and occasions.",
+        date: "Posted on August 15, 2021",
+      },
+      {
+        imgSrc: "/5-stars.png",
+        name: "James L.",
+        chkMrk: "/green-check-mark.png",
+        text: "As someone who's always on the lookout for unique fashion pieces, I'm thrilled to have stumbled upon Shop.co. The selection of clothes is not only diverse but also on-point with the latest trends.",
+        date: "Posted on August 16, 2022",
+      },
+      {
+        imgSrc: "/5-stars.png",
+        name: "Lara T.",
+        chkMrk: "/green-check-mark.png",
+        text: "Great experience with Shop.co! The clothes arrived fast, fit perfectly, and looked just like the pictures.",
+        date: "Posted on August 17, 2023",
+      },
+      {
+        imgSrc: "/5-stars.png",
+        name: "David R.",
+        chkMrk: "/green-check-mark.png",
+        text: "The customer service is outstanding, and the clothes are top-notch quality. I'm a fan!",
+        date: "Posted on August 18, 2024",
+      },
+      {
+        imgSrc: "/5-stars.png",
+        name: "Emily S.",
+        chkMrk: "/green-check-mark.png",
+        text: "Stylish, affordable, and comfortable – Shop.co has earned a loyal customer in me.",
+        date: "Posted on August 19, 2025",
+      }
+    ]
     /* //////////////////////// */
 
 
@@ -92,7 +141,7 @@ export default function ClothePage() {
 
 
 
-      {/* /////////////////////////////// */}  
+      {/* product listing */}  
       <section className="flex flex-col lg:flex-row gap-10 mt-[36px] mx-auto max-w-[1200px] w-full xl:pl-[35px]">
         {/* Left: product images */}
         <div className="flex flex-row gap-4 mx-auto md:ml-[5px]">
@@ -267,7 +316,92 @@ export default function ClothePage() {
         </div>
         {/* Right: product details */}
       </section>
-      {/* /////////////////////////////// */}  
+      {/* product listing */}  
+
+
+      {/* extrs */}
+      <section className="mx-auto container mt-[50px] text-black">
+        <div className="flex flex-row gap-[30px] md:gap-[10px] justify-center">
+          <button className=" w-[414px] h-[50px] hover:cursor-pointer hover:border-b-2 hover:border-black">Product Details</button>
+          <button className="w-[414px] h-[50px] hover:cursor-pointer hover:border-b-2 hover:border-black">Rating & Reviews</button>
+          <button className="w-[414px] h-[50px] hover:cursor-pointer hover:border-b-2 hover:border-black">FAQs</button>
+        </div>
+      </section>
+      {/* extrs */}
+
+
+
+        {/* ///////////////////////////////////// */}
+        <section className="mt-[32px] mx-auto container md:px-[25px] text-black">
+          {/* user review stuff */}
+          <div className="flex items-center justify-between">
+            {/* Left side */}
+            <div className="flex items-center">
+              <span className="md:text-[24px] text-[15px] font-bold">All Reviews</span>
+              <span className="hidden md:block ml-[10px] text-[14px] text-gray-500">(451)</span>
+            </div>
+            {/* Left side */}
+
+            {/* Right side */}
+            <div className="flex items-center ml-[20px] md:ml-[0]">
+              <Image
+                src="/filter-btn.png"
+                alt="filter-btn"
+                width={32}
+                height={32}
+                className="w-[40px] h-[40px] md:mr-[30px] hover:cursor-pointer transition-all duration-200 transform hover:scale-105"
+              />
+
+              <div className="hidden md:flex items-center hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
+                <span>Latest</span>
+                <Image
+                  className="h-[20px] w-[20px] ml-[21px]"
+                  src="/Arrow-Down.png"
+                  alt="Arrow Down"
+                  width={20}
+                  height={20}
+                />
+              </div>
+
+              <button className="ml-[10px] text-[14px] px-[10px] py-[10px] md:ml-[30px] md:px-6 md:py-2 md:text-[16px] bg-black text-white rounded-full hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
+                Write a Review
+              </button>
+            </div>
+            {/* Right side */}
+          </div>
+          {/* user review stuff */}
+
+
+
+          {/* //////////// */}
+          <div>
+           <div className="mt-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {cardsData.map((card, idx) => (
+                  <div key={idx} className="bg-white rounded-lg shadow-md p-6 flex flex-col gap-3">
+                    <div className="flex items-center gap-2">
+                      <Image src={card.imgSrc} alt="stars" width={130} height={16}  className="w-[100px] md:w-[130px]"/>
+                      <span className="font-semibold ml-2 text-[16px] md:text-[20px]">{card.name}</span>
+                      <Image src={card.chkMrk} alt="verified" width={24} height={18} className="ml-1 w-[20px] md:w-[24px]" />
+                    </div>
+                    <span className="text-gray-700 text-[18px]">{card.text}</span>
+                    <span className="text-gray-700 text-[15px] mt-[24px]">{card.date}</span>
+                  </div>
+                ))}
+              </div>
+                <div className="flex justify-center mt-[51px]">
+                  <button className="font-bold border-b-2 border-transparent hover:border-black hover:cursor-pointer">
+                    Load More Reviews
+                  </button>
+                </div>
+            </div>
+          </div>
+          {/* //////////// */}
+
+
+
+        </section>
+        {/* ///////////////////////////////////// */}
 
 
 
