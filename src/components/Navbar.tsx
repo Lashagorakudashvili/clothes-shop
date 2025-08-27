@@ -417,7 +417,7 @@ const Navbar = () => {
                     ${isSearchExpanded ? 'md:ml-auto' : 'ml-2 md:ml-auto'}
                     text-gray-900
                 `}>
-                    <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full transition-all duration-200 transform hover:scale-105">
+                    <Link href="/cart" className="p-1 md:p-2 hover:bg-gray-100 rounded-full transition-all duration-200 transform hover:scale-105">
                         <ShoppingCart size={22} strokeWidth={2} />
                     </Link>
                     <Link href="#" className="p-1 md:p-2 hover:bg-gray-100 rounded-full md:mr-[0.5rem] lg:mr-[0.8rem] xl:mr-[1rem] transition-all duration-200 transform hover:scale-105">

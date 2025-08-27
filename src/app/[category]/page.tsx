@@ -317,6 +317,8 @@ const Paginator: React.FC<{
 
 
 
+
+
   return (
     <main className="flex flex-col min-h-screen overflow-x-hidden">
       <p className="mt-[140px] ml-[1rem] md:ml-[1.8rem] lg:ml-[5rem] xl:ml-[7.3rem] text-[#000000]">

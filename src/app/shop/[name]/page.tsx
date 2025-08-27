@@ -3,9 +3,7 @@
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { products } from "@/data/products";
-
-
+import { products, Product } from "@/data/products";
 import React, { useEffect, useRef, useState, useMemo } from "react";
 
 
@@ -28,8 +26,6 @@ export default function ClothePage() {
   }
 
 
-  
-  /* //////////////////////// */
     /* colors */
     const colors = [
       { name: 'brown', bg: '#4F4631', activeBg: '#3d381f', border: '#4F4631', activeBorder: '#2c2714' },
@@ -47,7 +43,6 @@ export default function ClothePage() {
     /* colors */
 
 
-
     /* sizes */
     const sizes = [
         'Small', 'Medium', 'Large', 'X-Large',
@@ -61,7 +56,6 @@ export default function ClothePage() {
         setSelectedSizes(updated);
       };
     /* sizes */
-
 
 
     /* product add and remove */
@@ -80,9 +74,7 @@ export default function ClothePage() {
     /* product add and remove */
 
 
-
-
-
+    /* product reviews */
     const cardsData = [
       {
         imgSrc: "/5-stars.png",
@@ -127,7 +119,69 @@ export default function ClothePage() {
         date: "Posted on August 19, 2025",
       }
     ]
-    /* //////////////////////// */
+    /* product reviews */
+
+
+    /* card content/styles */
+    const scrollCarousel = (carouselRef: React.RefObject<HTMLDivElement>, direction: number) => {
+      if (carouselRef.current) {
+        const productElem = carouselRef.current.querySelector(".snap-center") as HTMLElement;
+        if (productElem) {
+          const productWidth = productElem.clientWidth + 16; // 16px = space-x-4
+          carouselRef.current.scrollBy({
+            left: direction * productWidth,
+            behavior: "smooth",
+          });
+        }
+      }
+    };
+    const carouselRef1 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
+
+    
+    const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+      return (
+        <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, '-')}`} className="cursor-pointer">
+          <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
+            <Image
+              src={product.image}
+              alt={product.name}
+              width={295}
+              height={298}
+              className="object-cover mb-4"
+            />
+            <h2 className="text-[15px] md:text-[16.5px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
+            <div className="mb-2 w-full flex justify-start">
+              <Image
+                src={`/${product.stars}`}
+                alt="rating"
+                width={104}
+                height={18}
+                className="object-contain md:w-[70px] lg:w-[104px]"
+              />
+              {product.stars === "4-5-stars.png" ? (
+                <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] md:mt-[0px] ml-[13px] text-black">4.5/5</span>
+              ) :
+                <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[3.5px] md:mt-[0px] ml-[13px] text-black">3.5/5</span>
+              }
+            </div>
+            <div className="flex items-center w-full mb-2">
+              <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black text-left">${product.price}</div>
+              {product.originalPrice && (
+                <div className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
+                  ${product.originalPrice}
+                </div>
+              )}
+              {product.discount && (
+                <div className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
+                  {product.discount}
+                </div>
+              )}
+            </div>
+          </div>
+        </Link>
+      );
+    };
+    /* card content/styles */
 
 
 
@@ -138,7 +192,6 @@ export default function ClothePage() {
       <p className="mt-[140px] -ml-[7px] md:ml-[5px] lg:ml-[0px] xl:ml-[2.3rem] text-[#000000]">
         <Link href={"/"}>Home</Link> &gt; {product.name}
       </p>
-
 
 
       {/* product listing */}  
@@ -260,16 +313,17 @@ export default function ClothePage() {
             <span className="text-black">Select Colors</span>
             <div className="flex gap-[12px] mt-[10px]">
               {colors.map((color, index) => (
-                        <button
-                          key={color.name}
-                          onClick={() => toggleColor(index)}
-                          className="w-[37px] h-[37px] rounded-full border-[3px] cursor-pointer"
-                          style={{
-                            backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
-                            borderColor: selectedColors[index] ? color.activeBorder : color.border,
-                          }}
-                        ></button>
-                      ))}
+                <button
+                  key={color.name}
+                  onClick={() => toggleColor(index)}
+                  className="w-[37px] h-[37px] rounded-full border-[3px] cursor-pointer"
+                  style={{
+                    backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
+                    borderColor: selectedColors[index] ? color.activeBorder : color.border,
+                  }}
+                >
+                </button>
+              ))}
             </div>
           </div>
           {/* colors */}
@@ -330,79 +384,140 @@ export default function ClothePage() {
       {/* extrs */}
 
 
+      {/* product reviews */}
+      <section className="mt-[32px] mx-auto container md:px-[25px] text-black">
+        {/* user review stuff */}
+        <div className="flex items-center justify-between">
+          {/* Left side */}
+          <div className="flex items-center">
+            <span className="md:text-[24px] text-[15px] font-bold">All Reviews</span>
+            <span className="hidden md:block ml-[10px] text-[14px] text-gray-500">(451)</span>
+          </div>
+          {/* Left side */}
 
-        {/* ///////////////////////////////////// */}
-        <section className="mt-[32px] mx-auto container md:px-[25px] text-black">
-          {/* user review stuff */}
-          <div className="flex items-center justify-between">
-            {/* Left side */}
-            <div className="flex items-center">
-              <span className="md:text-[24px] text-[15px] font-bold">All Reviews</span>
-              <span className="hidden md:block ml-[10px] text-[14px] text-gray-500">(451)</span>
-            </div>
-            {/* Left side */}
+          {/* Right side */}
+          <div className="flex items-center ml-[20px] md:ml-[0]">
+            <Image
+              src="/filter-btn.png"
+              alt="filter-btn"
+              width={32}
+              height={32}
+              className="w-[40px] h-[40px] md:mr-[30px] hover:cursor-pointer transition-all duration-200 transform hover:scale-105"
+            />
 
-            {/* Right side */}
-            <div className="flex items-center ml-[20px] md:ml-[0]">
+            <div className="hidden md:flex items-center hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
+              <span>Latest</span>
               <Image
-                src="/filter-btn.png"
-                alt="filter-btn"
-                width={32}
-                height={32}
-                className="w-[40px] h-[40px] md:mr-[30px] hover:cursor-pointer transition-all duration-200 transform hover:scale-105"
+                className="h-[20px] w-[20px] ml-[21px]"
+                src="/Arrow-Down.png"
+                alt="Arrow Down"
+                width={20}
+                height={20}
               />
-
-              <div className="hidden md:flex items-center hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
-                <span>Latest</span>
-                <Image
-                  className="h-[20px] w-[20px] ml-[21px]"
-                  src="/Arrow-Down.png"
-                  alt="Arrow Down"
-                  width={20}
-                  height={20}
-                />
-              </div>
-
-              <button className="ml-[10px] text-[14px] px-[10px] py-[10px] md:ml-[30px] md:px-6 md:py-2 md:text-[16px] bg-black text-white rounded-full hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
-                Write a Review
-              </button>
             </div>
-            {/* Right side */}
+
+            <button className="ml-[10px] text-[14px] px-[10px] py-[10px] md:ml-[30px] md:px-6 md:py-2 md:text-[16px] bg-black text-white rounded-full hover:cursor-pointer transition-all duration-200 transform hover:scale-105">
+              Write a Review
+            </button>
           </div>
-          {/* user review stuff */}
+          {/* Right side */}
+        </div>
+        {/* user review stuff */}
 
-
-
-          {/* //////////// */}
-          <div>
-           <div className="mt-8">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {cardsData.map((card, idx) => (
-                  <div key={idx} className="bg-white rounded-lg shadow-md p-6 flex flex-col gap-3">
-                    <div className="flex items-center gap-2">
-                      <Image src={card.imgSrc} alt="stars" width={130} height={16}  className="w-[100px] md:w-[130px]"/>
-                      <span className="font-semibold ml-2 text-[16px] md:text-[20px]">{card.name}</span>
-                      <Image src={card.chkMrk} alt="verified" width={24} height={18} className="ml-1 w-[20px] md:w-[24px]" />
-                    </div>
-                    <span className="text-gray-700 text-[18px]">{card.text}</span>
-                    <span className="text-gray-700 text-[15px] mt-[24px]">{card.date}</span>
+        <div>
+          <div className="mt-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {cardsData.map((card, idx) => (
+                <div key={idx} className="bg-white rounded-lg shadow-md p-6 flex flex-col gap-3">
+                  <div className="flex items-center gap-2">
+                    <Image src={card.imgSrc} alt="stars" width={130} height={16}  className="w-[100px] md:w-[130px]"/>
+                    <span className="font-semibold ml-2 text-[16px] md:text-[20px]">{card.name}</span>
+                    <Image src={card.chkMrk} alt="verified" width={24} height={18} className="ml-1 w-[20px] md:w-[24px]" />
                   </div>
-                ))}
-              </div>
-                <div className="flex justify-center mt-[51px]">
-                  <button className="font-bold border-b-2 border-transparent hover:border-black hover:cursor-pointer">
-                    Load More Reviews
-                  </button>
+                  <span className="text-gray-700 text-[18px]">{card.text}</span>
+                  <span className="text-gray-700 text-[15px] mt-[24px]">{card.date}</span>
                 </div>
+              ))}
             </div>
+              <div className="flex justify-center mt-[51px]">
+                <button className="font-bold border-b-2 border-transparent hover:border-black hover:cursor-pointer">
+                  Load More Reviews
+                </button>
+              </div>
           </div>
-          {/* //////////// */}
+        </div>
+      </section>
+      {/* product reviews */}
 
 
+      {/* recommendations */}
+      <section className="my-12">
+        {/* main div */}
+        <div className="container mx-auto px-4">
+          <h2 className="text-2xl text-[40px] md:text-[40px] lg:text-[50px] xl:text-[60px] text-center mt-[72px] font-extrabold mb-4 text-black">You might also like</h2>
+            
+          {/* Desktop view: Grid layout */}
+          <div className="hidden md:grid grid-cols-4 gap-4 mt-[55px] mb-[78px]">
+            {products.slice(0, 4).map((product) => (
+              <ProductCard  key={product.id} product={product} />
+            ))}
+          </div>
+          {/* Desktop view: Grid layout */}
+            
+          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+          <div className="md:hidden relative">
+              
+            {/* Left Arrow Button */}
+            <button
+              onClick={() => scrollCarousel(carouselRef1, -1)}
+              className="absolute left-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+            {/* Left Arrow Button */}
+              
+            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
+            <div
+              ref={carouselRef1}
+              className="flex overflow-x-auto space-x-4 scroll-smooth snap-x snap-mandatory px-[10vw]"
+            >
+              {products.slice(0, 4).map((product) => (
+                <div key={product.id} className="flex-shrink-0 w-[80vw] snap-center">
+                  <ProductCard product={product} />
+                </div>
+              ))}
+            </div>
+            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
 
-        </section>
-        {/* ///////////////////////////////////// */}
-
+            {/* Right Arrow Button */}
+            <button
+              onClick={() => scrollCarousel(carouselRef1, 1)}
+              className="absolute right-0 top-1/2 transform -translate-y-1/2 z-10 p-2 bg-white rounded-full shadow"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="h-6 w-6 text-black"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+              </svg>
+            </button>
+            {/* Right Arrow Button */}
+          </div>
+          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+        </div>
+      </section>
+      {/* recommendations */}
 
 
     </main>
