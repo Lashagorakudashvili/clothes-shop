@@ -1,10 +1,10 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { useParams, useRouter  } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { products, Product } from "@/data/products";
-import React, { useEffect, useRef, useState, useMemo } from "react";
+import React, { useRef, useState } from "react";
 
 
 export default function ClothePage() {
@@ -74,6 +74,35 @@ export default function ClothePage() {
     /* product add and remove */
 
 
+    /* cart adding */
+    const handleAddToCart = () => {
+      if (productAmount === 0) return; // prevent adding 0 quantity
+
+      const storedCart = JSON.parse(localStorage.getItem("cart") || "[]");
+      const existingItemIndex = storedCart.findIndex((item: any) => item.id === product.id);
+
+      if (existingItemIndex >= 0) {
+        // If product already exists, update quantity
+        storedCart[existingItemIndex].quantity += productAmount;
+      } else {
+        // Add new item
+        storedCart.push({
+      id: product.id,
+      name: product.name,
+      image: product.image,
+      price: product.price,
+      quantity: productAmount,
+      size: sizes[selectedSizes.findIndex(s => s)], 
+      color: colors[selectedColors.findIndex(c => c)]?.name, 
+      discount: product.discount || undefined, // <-- Add this line
+    });
+      }
+
+      localStorage.setItem("cart", JSON.stringify(storedCart));
+    };
+    /* cart adding */
+
+
     /* product reviews */
     const cardsData = [
       {
@@ -138,49 +167,35 @@ export default function ClothePage() {
     const carouselRef1 = useRef<HTMLDivElement>(null) as React.RefObject<HTMLDivElement>;
 
     
-    const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
-      return (
-        <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, '-')}`} className="cursor-pointer">
-          <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
-            <Image
-              src={product.image}
-              alt={product.name}
-              width={295}
-              height={298}
-              className="object-cover mb-4"
-            />
-            <h2 className="text-[15px] md:text-[16.5px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">{product.name}</h2>
-            <div className="mb-2 w-full flex justify-start">
-              <Image
-                src={`/${product.stars}`}
-                alt="rating"
-                width={104}
-                height={18}
-                className="object-contain md:w-[70px] lg:w-[104px]"
-              />
-              {product.stars === "4-5-stars.png" ? (
-                <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] md:mt-[0px] ml-[13px] text-black">4.5/5</span>
-              ) :
-                <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[3.5px] md:mt-[0px] ml-[13px] text-black">3.5/5</span>
-              }
+    const ProductCard: React.FC<{ product: Product }> = ({ product }) => (
+    <Link href={`/shop/${product.name.toLowerCase().replace(/\s+/g, "-")}`} className="cursor-pointer">
+      <div className="md:h-full flex flex-col items-center bg-white rounded-lg shadow-md p-6 transition-all duration-200 transform hover:scale-105">
+        <Image src={product.image} alt={product.name} width={295} height={298} className="object-cover mb-4" />
+        <h2 className="text-[15px] md:text-[16.5px] lg:text-[25px] xl:text-[33px] 2xl:text-[41px] text-xl font-semibold mb-2 text-black text-left w-full">
+          {product.name}
+        </h2>
+        <div className="mb-2 w-full flex justify-start">
+          <Image src={`/${product.stars}`} alt="rating" width={104} height={18} className="object-contain md:w-[70px] lg:w-[104px]" />
+          {product.stars === "4-5-stars.png" ? (
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[2px] ml-[13px] text-black">4.5/5</span>
+          ) : (
+            <span className="text-[12px] md:text-[10px] lg:text-[20px] mt-[3.5px] ml-[13px] text-black">3.5/5</span>
+          )}
+        </div>
+        <div className="flex items-center w-full mb-2">
+          <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black">${product.price}</div>
+          {product.originalPrice && (
+            <div className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto">
+              ${product.originalPrice}
             </div>
-            <div className="flex items-center w-full mb-2">
-              <div className="text-[20px] md:text-[15px] lg:text-[25px] xl:text-[30px] text-2xl font-bold text-black text-left">${product.price}</div>
-              {product.originalPrice && (
-                <div className="text-[17px] md:text-[12px] lg:text-[22px] xl:text-[27px] text-sm line-through text-gray-500 ml-auto" style={{ marginLeft: "10px" }}>
-                  ${product.originalPrice}
-                </div>
-              )}
-              {product.discount && (
-                <div className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500" style={{ marginLeft: product.originalPrice ? "10px" : "auto" }}>
-                  {product.discount}
-                </div>
-              )}
-            </div>
-          </div>
-        </Link>
-      );
-    };
+          )}
+          {product.discount && (
+            <div className="text-[14px] md:text-[12px] lg:text-[18px] xl:text-[21px] text-sm text-red-500 ml-2">{product.discount}</div>
+          )}
+        </div>
+      </div>
+    </Link>
+  );
     /* card content/styles */
 
 
@@ -195,35 +210,24 @@ export default function ClothePage() {
 
 
       {/* product listing */}  
-      <section className="flex flex-col lg:flex-row gap-10 mt-[36px] mx-auto max-w-[1200px] w-full xl:pl-[35px]">
-        {/* Left: product images */}
-        <div className="flex flex-row gap-4 mx-auto md:ml-[5px]">
-          {/* pc same prdct pics */}
+      <section className="flex flex-col lg:flex-row gap-10 mt-[36px] mx-auto max-w-[1200px]">
+        {/* Images */}
+        <div className="flex flex-row gap-4 mx-auto">
+          {/* Left thumbs (desktop) */}
           <div className="hidden md:flex flex-col gap-2">
-            <Image
-              src={product.image}
-              alt="thumb1"
-              width={230}
-              height={230}
-              className="lg:max-w-[150px] rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105"
-            />
-            <Image
-              src={product.image}
-              alt="thumb2"
-              width={230}
-              height={230}
-              className="lg:max-w-[150px] rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105"
-            />
-            <Image
-              src={product.image}
-              alt="thumb3"
-              width={230}
-              height={230}
-              className="lg:max-w-[150px] rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105"
-            />
+            {[1, 2, 3].map((i) => (
+              <Image
+                key={i}
+                src={product.image}
+                alt={`thumb${i}`}
+                width={230}
+                height={230}
+                className="lg:max-w-[150px] rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105"
+              />
+            ))}
           </div>
-          {/* pc same prdct pics */}
-          {/* Big main image */}
+
+          {/* Main image */}
           <Image
             src={product.image}
             alt={product.name}
@@ -231,144 +235,83 @@ export default function ClothePage() {
             height={700}
             className="rounded-lg object-cover lg:max-w-[310px] xl:max-w-[400px]"
           />
-          {/* Big main image */}
         </div>
 
-        {/* mobile same prdct pics */}
-        <div className="flex md:hidden flex-row gap-2 mx-auto -mt-[25px] w-full px-1">
-          <Image
-            src={product.image}
-            alt="thumb1"
-            width={180}
-            height={180}
-            className="flex-1 max-w-full rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105 object-cover"
-            style={{ minWidth: 0 }}
-              />
-          <Image
-            src={product.image}
-            alt="thumb2"
-            width={180}
-            height={180}
-            className="flex-1 max-w-full rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105 object-cover"
-            style={{ minWidth: 0 }}
-          />
-          <Image
-            src={product.image}
-            alt="thumb3"
-            width={180}
-            height={180}
-            className="flex-1 max-w-full rounded-md cursor-pointer transition-all duration-200 transform hover:scale-105 object-cover"
-            style={{ minWidth: 0 }}
-          />
-        </div>
-        {/* mobile same prdct pics */}
-        {/* Left: product images */}
-
-
-        {/* Right: product details */}
-        <div className="flex flex-col md:ml-[10px] lg:ml-[0]">
+        {/* Product details */}
+        <div className="flex flex-col">
           <h1 className="text-black text-3xl font-bold mb-2">{product.name}</h1>
+
           {/* Stars */}
           <div className="flex items-center mb-2">
-            <Image
-              src={`/${product.stars}`}
-              alt="rating"
-              width={104}
-              height={18}
-              className="object-contain"
-            />
+            <Image src={`/${product.stars}`} alt="rating" width={104} height={18} />
             <span className="ml-2 text-gray-700">
-              {(() => {
-                if (product.stars === "5-stars.png") return "5/5";
-                if (product.stars === "4-5-stars.png") return "4.5/5";
-                if (product.stars === "4-stars.png") return "4/5";
-                if (product.stars === "3-5-stars.png") return "3.5/5";
-                if (product.stars === "3-stars.png") return "3/5";
-                return "";
-              })()}
+              {product.stars === "5-stars.png" ? "5/5" :
+               product.stars === "4-5-stars.png" ? "4.5/5" :
+               product.stars === "4-stars.png" ? "4/5" :
+               product.stars === "3-5-stars.png" ? "3.5/5" : ""}
             </span>
           </div>
-          {/* Stars */}
 
           {/* Price */}
           <div className="flex items-center mb-4">
             <span className="text-2xl font-bold text-black">${product.price}</span>
-            {product.originalPrice && (
-              <span className="ml-4 text-gray-500 line-through">${product.originalPrice}</span>
-            )}
-            {product.discount && (
-              <span className="ml-4 text-red-500">{product.discount}</span>
-            )}
+            {product.originalPrice && <span className="ml-4 text-gray-500 line-through">${product.originalPrice}</span>}
+            {product.discount && <span className="ml-4 text-red-500">{product.discount}</span>}
           </div>
-          {/* Price */}
 
-          {/* Description */}
           <p className="text-gray-600 mb-6">
             This {product.name.toLowerCase()} is crafted with premium materials and offers superior comfort and style.
           </p>
-          {/* Description */}
 
-          {/* colors */}
-          <div className="mt-[10px]">
+          {/* Colors */}
+          <div className="mt-3">
             <span className="text-black">Select Colors</span>
             <div className="flex gap-[12px] mt-[10px]">
               {colors.map((color, index) => (
                 <button
                   key={color.name}
                   onClick={() => toggleColor(index)}
-                  className="w-[37px] h-[37px] rounded-full border-[3px] cursor-pointer"
+                  className="w-[37px] h-[37px] rounded-full border-[3px]"
                   style={{
                     backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
                     borderColor: selectedColors[index] ? color.activeBorder : color.border,
                   }}
-                >
-                </button>
+                ></button>
               ))}
             </div>
           </div>
-          {/* colors */}
 
-          {/* Size selection */}
+          {/* Sizes */}
           <div className="mb-6 mt-[40px]">
             <h3 className="font-semibold mb-2 text-black">Choose Size</h3>
             <div className="flex flex-wrap gap-[12px]">
               {sizes.map((size, index) => (
-                    <button
-                      key={size}
-                      onClick={() => toggleSize(index)}
-                      className={`p-[15px] rounded-full text-sm font-medium transition-all hover:bg-black hover:text-white cursor-pointer
-                        ${selectedSizes[index] ? 'bg-black text-white' : 'bg-white text-black'}`}
-                    >
-                      {size}
-                    </button>
-                  ))}
+                <button
+                  key={size}
+                  onClick={() => toggleSize(index)}
+                  className={`p-[15px] rounded-full text-sm font-medium transition-all hover:bg-black hover:text-white ${
+                    selectedSizes[index] ? "bg-black text-white" : "bg-white text-black"
+                  }`}
+                >
+                  {size}
+                </button>
+              ))}
             </div>
           </div>
-          {/* Size selection */}
 
-          {/* Quantity + Cart */}
+          {/* Quantity + Add to cart */}
           <div className="flex items-center gap-4">
-            <button 
-              className="px-3 py-1 border rounded text-black cursor-pointer transition-all hover:bg-black hover:text-white"
-              onClick={minus}
-              >
-              -
-            </button>
-              <span className="text-black">{productAmount}</span>
-            <button 
-              className="px-3 py-1 border rounded text-black cursor-pointer transition-all hover:bg-black hover:text-white"
-              onClick={plus}
+            <button onClick={minus} className="px-3 py-1 border rounded text-black hover:bg-black hover:text-white">-</button>
+            <span className="text-black">{productAmount}</span>
+            <button onClick={plus} className="px-3 py-1 border rounded text-black hover:bg-black hover:text-white">+</button>
+            <button
+              onClick={handleAddToCart}
+              className="ml-6 px-6 py-2 bg-black text-white rounded-full hover:scale-105 transition-all"
             >
-              +
-            </button>
-            
-            <button className="ml-6 px-6 py-2  bg-black text-white rounded-full cursor-pointer transition-all duration-200 transform hover:scale-105">
               Add to Cart
             </button>
           </div>
-          {/* Quantity + Cart */}
         </div>
-        {/* Right: product details */}
       </section>
       {/* product listing */}  
 
