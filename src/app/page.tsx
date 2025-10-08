@@ -1,9 +1,9 @@
+/* page 1 (landing page)  */
 'use client';
 
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-//import { usePathname } from "next/navigation";
 
 
 export default function Home() {

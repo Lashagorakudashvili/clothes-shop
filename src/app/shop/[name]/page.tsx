@@ -1,6 +1,7 @@
+/* page 3 (clothing buying)  */
 "use client";
 
-import { useParams, useRouter  } from "next/navigation";
+import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { products, Product } from "@/data/products";
@@ -87,15 +88,15 @@ export default function ClothePage() {
       } else {
         // Add new item
         storedCart.push({
-      id: product.id,
-      name: product.name,
-      image: product.image,
-      price: product.price,
-      quantity: productAmount,
-      size: sizes[selectedSizes.findIndex(s => s)], 
-      color: colors[selectedColors.findIndex(c => c)]?.name, 
-      discount: product.discount || undefined, // <-- Add this line
-    });
+        id: product.id,
+        name: product.name,
+        image: product.image,
+        price: product.price,
+        quantity: productAmount,
+        size: sizes[selectedSizes.findIndex(s => s)], 
+        color: colors[selectedColors.findIndex(c => c)]?.name, 
+        discount: product.discount || undefined,
+      });
       }
 
       localStorage.setItem("cart", JSON.stringify(storedCart));
@@ -251,6 +252,7 @@ export default function ClothePage() {
                product.stars === "3-5-stars.png" ? "3.5/5" : ""}
             </span>
           </div>
+          {/* Stars */}
 
           {/* Price */}
           <div className="flex items-center mb-4">
@@ -258,10 +260,13 @@ export default function ClothePage() {
             {product.originalPrice && <span className="ml-4 text-gray-500 line-through">${product.originalPrice}</span>}
             {product.discount && <span className="ml-4 text-red-500">{product.discount}</span>}
           </div>
+          {/* Price */}
 
+          {/* item descrpts */}
           <p className="text-gray-600 mb-6">
             This {product.name.toLowerCase()} is crafted with premium materials and offers superior comfort and style.
           </p>
+          {/* item descrpts */}
 
           {/* Colors */}
           <div className="mt-3">
@@ -271,7 +276,7 @@ export default function ClothePage() {
                 <button
                   key={color.name}
                   onClick={() => toggleColor(index)}
-                  className="w-[37px] h-[37px] rounded-full border-[3px]"
+                  className="hover:scale-105 transition-all hover:cursor-pointer w-[37px] h-[37px] rounded-full border-[3px]"
                   style={{
                     backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
                     borderColor: selectedColors[index] ? color.activeBorder : color.border,
@@ -280,38 +285,46 @@ export default function ClothePage() {
               ))}
             </div>
           </div>
+          {/* Colors */}
 
           {/* Sizes */}
-          <div className="mb-6 mt-[40px]">
+            <div className="mb-6 mt-[40px]">
             <h3 className="font-semibold mb-2 text-black">Choose Size</h3>
             <div className="flex flex-wrap gap-[12px]">
               {sizes.map((size, index) => (
-                <button
-                  key={size}
-                  onClick={() => toggleSize(index)}
-                  className={`p-[15px] rounded-full text-sm font-medium transition-all hover:bg-black hover:text-white ${
-                    selectedSizes[index] ? "bg-black text-white" : "bg-white text-black"
-                  }`}
-                >
-                  {size}
-                </button>
+              <button
+                key={size}
+                onClick={() => {
+                const updated = Array(sizes.length).fill(false);
+                updated[index] = true;
+                setSelectedSizes(updated);
+                }}
+                className={`hover:cursor-pointer p-[15px] rounded-full text-sm font-medium transition-all hover:bg-black hover:text-white ${
+                selectedSizes[index] ? "bg-black text-white" : "bg-white text-black"
+                }`}
+              >
+                {size}
+              </button>
               ))}
             </div>
-          </div>
+            </div>
+          {/* Sizes */}
 
           {/* Quantity + Add to cart */}
           <div className="flex items-center gap-4">
-            <button onClick={minus} className="px-3 py-1 border rounded text-black hover:bg-black hover:text-white">-</button>
+            <button onClick={minus} className="hover:cursor-pointer px-3 py-1 border rounded text-black hover:bg-black hover:text-white">-</button>
             <span className="text-black">{productAmount}</span>
-            <button onClick={plus} className="px-3 py-1 border rounded text-black hover:bg-black hover:text-white">+</button>
+            <button onClick={plus} className="hover:cursor-pointer px-3 py-1 border rounded text-black hover:bg-black hover:text-white">+</button>
             <button
               onClick={handleAddToCart}
-              className="ml-6 px-6 py-2 bg-black text-white rounded-full hover:scale-105 transition-all"
+              className="hover:cursor-pointer ml-6 px-6 py-2 bg-black text-white rounded-full hover:scale-105 transition-all"
             >
               Add to Cart
             </button>
           </div>
+          {/* Quantity + Add to cart */}
         </div>
+        {/* Product details */}
       </section>
       {/* product listing */}  
 
@@ -367,6 +380,7 @@ export default function ClothePage() {
         </div>
         {/* user review stuff */}
 
+        {/* reviews */}
         <div>
           <div className="mt-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -389,6 +403,7 @@ export default function ClothePage() {
               </div>
           </div>
         </div>
+        {/* reviews */}
       </section>
       {/* product reviews */}
 
@@ -399,15 +414,15 @@ export default function ClothePage() {
         <div className="container mx-auto px-4">
           <h2 className="text-2xl text-[40px] md:text-[40px] lg:text-[50px] xl:text-[60px] text-center mt-[72px] font-extrabold mb-4 text-black">You might also like</h2>
             
-          {/* Desktop view: Grid layout */}
+          {/* Desktop view */}
           <div className="hidden md:grid grid-cols-4 gap-4 mt-[55px] mb-[78px]">
             {products.slice(0, 4).map((product) => (
               <ProductCard  key={product.id} product={product} />
             ))}
           </div>
-          {/* Desktop view: Grid layout */}
+          {/* Desktop view */}
             
-          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+          {/* Mobile view */}
           <div className="md:hidden relative">
               
             {/* Left Arrow Button */}
@@ -427,7 +442,7 @@ export default function ClothePage() {
             </button>
             {/* Left Arrow Button */}
               
-            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
+            {/* Mobile Carousel */}
             <div
               ref={carouselRef1}
               className="flex overflow-x-auto space-x-4 scroll-smooth snap-x snap-mandatory px-[10vw]"
@@ -438,7 +453,7 @@ export default function ClothePage() {
                 </div>
               ))}
             </div>
-            {/* Mobile Carousel Container with scroll-snap and side padding for centering */}
+            {/* Mobile Carousel */}
 
             {/* Right Arrow Button */}
             <button
@@ -457,12 +472,10 @@ export default function ClothePage() {
             </button>
             {/* Right Arrow Button */}
           </div>
-          {/* Mobile view: Horizontally scrollable carousel with scroll-snap */}
+          {/* Mobile view */}
         </div>
       </section>
       {/* recommendations */}
-
-
     </main>
   );
 }
