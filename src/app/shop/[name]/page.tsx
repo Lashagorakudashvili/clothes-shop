@@ -273,22 +273,28 @@ export default function ClothePage() {
             <span className="text-black">Select Colors</span>
             <div className="flex gap-[12px] mt-[10px]">
               {colors.map((color, index) => (
-                <button
-                  key={color.name}
-                  onClick={() => toggleColor(index)}
-                  className="hover:scale-105 transition-all hover:cursor-pointer w-[37px] h-[37px] rounded-full border-[3px]"
-                  style={{
-                    backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
-                    borderColor: selectedColors[index] ? color.activeBorder : color.border,
-                  }}
-                ></button>
+              <button
+                key={color.name}
+                onClick={() => {
+                const updated = Array(colors.length).fill(false);
+                if (!selectedColors[index]) {
+                  updated[index] = true;
+                }
+                  setSelectedColors(updated);
+                }}
+                className="hover:scale-105 transition-all hover:cursor-pointer w-[37px] h-[37px] rounded-full border-[3px]"
+                style={{
+                backgroundColor: selectedColors[index] ? color.activeBg : color.bg,
+                borderColor: selectedColors[index] ? color.activeBorder : color.border,
+                }}
+              ></button>
               ))}
             </div>
           </div>
           {/* Colors */}
 
           {/* Sizes */}
-            <div className="mb-6 mt-[40px]">
+          <div className="mb-6 mt-[40px]">
             <h3 className="font-semibold mb-2 text-black">Choose Size</h3>
             <div className="flex flex-wrap gap-[12px]">
               {sizes.map((size, index) => (
@@ -296,7 +302,9 @@ export default function ClothePage() {
                 key={size}
                 onClick={() => {
                 const updated = Array(sizes.length).fill(false);
-                updated[index] = true;
+                if (!selectedSizes[index]) {
+                  updated[index] = true;
+                }
                 setSelectedSizes(updated);
                 }}
                 className={`hover:cursor-pointer p-[15px] rounded-full text-sm font-medium transition-all hover:bg-black hover:text-white ${
@@ -307,7 +315,7 @@ export default function ClothePage() {
               </button>
               ))}
             </div>
-            </div>
+          </div>
           {/* Sizes */}
 
           {/* Quantity + Add to cart */}
